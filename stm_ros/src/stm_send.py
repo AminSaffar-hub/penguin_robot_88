@@ -11,7 +11,7 @@ def  serial_node():
     rospy.init_node('test_sender_node',anonymous = True)
     rate = rospy.Rate(3)
     while not rospy.is_shutdown():
-        ser.write(b"abc")    
+        ser.write(b"efg")    
         rate.sleep()
 
 
