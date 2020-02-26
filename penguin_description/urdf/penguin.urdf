@@ -1,5 +1,13 @@
 <?xml version="1.0"?>
 <robot name="penguin">
+
+<gazebo>
+  <plugin name="gazebo_ros_control" filename="libgazebo_ros_contol.so">
+        <robotNamespace>/penguin</robotNamespace>
+        <legacyModeNS>true</legacyModeNS>
+  </plugin>
+</gazebo>
+
     <link name="base_link">
         <inertial>
             <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 0.0"/>
@@ -124,7 +132,7 @@
     </joint>
 
 
-    <gazebo reference="WL_link">
+      <gazebo reference="WL_link">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
 	    <kp>1000000.0</kp>
@@ -159,5 +167,6 @@
 	    <minDepth>0.001</minDepth>
 	    <maxVel>1.0</maxVel>
 	  </gazebo>
+
 
 </robot>
