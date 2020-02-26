@@ -49,13 +49,22 @@ TIM_HandleTypeDef htim7;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+
+#define resolution 221.1f
+#define presicion 4
+#define pi 3.1415f
+#define RayonR 62.5f
+#define RayonL 62.5f
 int CountEntry = 0;
 unsigned int TicksRightNow = 0;
 unsigned int TicksLeftNow = 0;
 unsigned int TicksRightPrev = 0;
 unsigned int TicksLeftPrev = 0;
+float	DistR =0.0f;
+float DistL =0.0f;
 float DiffR = 0;
 float DiffL= 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,6 +77,7 @@ static void MX_TIM7_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 void initEncoder(void);
+float tickstoDistance(int,float);
 void CalculationFunction(void);
 void initMotors(void);
 void RunForward(int,int);
@@ -152,10 +162,18 @@ int main(void)
 	 */
 	 //Rotate(2000,-1);
 	 //RunBackward(2000,2000);
-	 RunForward(2000,2000);
+	// RunForward(2000,2000);
 	 //RunToGoal(2000,-2000);
-	 HAL_Delay(1200);
+	// HAL_Delay(1200);
 	 stopp();
+	 
+	 // Test Moving Distance
+	 /*while (DistR<300)
+	 {
+		 RunToGoal(2000,2000);
+	 }
+	 stopp();
+	 */
   /* USER CODE END 2 */
  
  
@@ -168,6 +186,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 		
+		/* Communication Test
 		HAL_UART_Receive(&huart2,(uint8_t*)dataIn,10,100);
 		result = CompareString(dataIn,"abc",4);
 		if( result)
@@ -178,6 +197,7 @@ int main(void)
 		
 
 		//HAL_UART_Transmit(&huart2,data,20,1000);
+		*/
 		
 	}
   /* USER CODE END 3 */
@@ -593,11 +613,18 @@ void initMotors()
 	stopp();
 	
 }
+float tickstoDistance(int ticks,float R)
+{
+	return((pi*R*ticks)/(resolution*presicion));
+}
 
 void CalculationFunction()
 {
 			TicksRightNow = TIM2->CNT ;
 			TicksLeftNow = TIM3->CNT ;
+	
+			DistR = tickstoDistance(TicksRightNow,RayonR);
+			DistL = tickstoDistance(TicksLeftNow,RayonL);
 	
 			DiffR = TicksRightNow - TicksRightPrev;
 			DiffL = TicksLeftNow - TicksLeftPrev;
@@ -619,6 +646,11 @@ void CalculationFunction()
 			{
 			   DiffL = DiffL + 65535 ;
 			}
+	
+}
+
+void Move(int Distance,int VR,int VL)
+{
 	
 }
 
