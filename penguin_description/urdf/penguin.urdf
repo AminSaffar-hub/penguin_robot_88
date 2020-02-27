@@ -118,6 +118,38 @@
                 <mesh filename="package://penguin_description/models/meshes/upper_base.dae"/>
             </geometry>
         </visual>
+        <inertial>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <mass value="1.51143"/>
+            <inertia ixx="0.172784748" ixy="0.000573265" ixz="-0.01351310072" iyy="0.0174117895" iyz="-0.007081193" izz="0.00756976136"/>
+        </inertial>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://penguin_description/models/meshes/upper_base.dae" />
+            </geometry>
+        </collision>
+    </link>
+    <link name="kinect_link">
+        <visual >
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://penguin_description/models/meshes/kinect.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+  	        <geometry>
+  	            <box size="0.07271 0.27794 0.073"/>
+  	        </geometry>
+  	    </collision>
+        <inertial>
+            <mass value="0.564" />
+            <origin xyz="0 0 0" />
+            <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
+                 iyy="0.000498940" iyz="0.0"
+                 izz="0.003879257" />
+        </inertial>
     </link>
 
 <!--joints-->
@@ -152,6 +184,11 @@
         <origin xyz="0.0 0.004 0.005" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="upper_base_link"/>
+    </joint>
+    <joint name="kinect_base_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="kinect_link"/>
     </joint>
 <!--friction and stiffness-->
       <gazebo reference="WL_link">
