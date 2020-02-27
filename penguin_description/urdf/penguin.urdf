@@ -1,13 +1,17 @@
 <?xml version="1.0"?>
 <robot name="penguin">
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotNamespace>/penguin</robotNamespace>
+                <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+                <!--legacyModeNS>true</legacyModeNS-->
+        </plugin>
+    </gazebo>
+<!--links-->
 
-<gazebo>
-  <plugin name="gazebo_ros_control" filename="libgazebo_ros_contol.so">
-        <robotNamespace>/penguin</robotNamespace>
-        <legacyModeNS>true</legacyModeNS>
-  </plugin>
-</gazebo>
-
+    <link name="dummy_link">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    </link>
     <link name="base_link">
         <inertial>
             <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 0.0"/>
@@ -78,7 +82,7 @@
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <<mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/>
+                <mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/>
             </geometry>
         </collision>
         <inertial>
@@ -107,12 +111,26 @@
             <inertia ixx="0.00000131067" ixy="0.0" ixz="0.0" iyy="0.00000191824" iyz="0.0" izz="0.00000139735"/>
         </inertial>
     </link>
+    <link name="upper_base_link">
+        <visual name="">
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://penguin_description/models/meshes/upper_base.dae"/>
+            </geometry>
+        </visual>
+    </link>
 
+<!--joints-->
+    <joint name="dummy_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="dummy_link"/>
+        <child link="base_link"/>
+    </joint>
     <joint name="LW_base_joint" type="continuous">
         <origin xyz="0.08 0.003 0.0315" rpy="0.0 0.0 1.5707"/>
         <parent link="base_link"/>
         <child link="LW_link"/>
-        <axis xyz="0.0 1 0.0"/>
+        <axis xyz="0.0 -1 0.0"/>
     </joint>
     <joint name="RW_base_joint" type="continuous">
         <origin xyz="-0.08 0.003 0.0315" rpy="0.0 0.0 -1.5707"/>
@@ -130,8 +148,12 @@
         <parent link="base_link"/>
         <child link="DCW_link"/>
     </joint>
-
-
+    <joint name="upper_base_joint" type="fixed">
+        <origin xyz="0.0 0.004 0.005" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="upper_base_link"/>
+    </joint>
+<!--friction and stiffness-->
       <gazebo reference="WL_link">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
@@ -167,6 +189,29 @@
 	    <minDepth>0.001</minDepth>
 	    <maxVel>1.0</maxVel>
 	  </gazebo>
+
+<!--transmissions-->
+    <transmission name="left_wheel_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="LW_base_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
+        </joint>
+        <actuator name="left_wheel_actuator">
+            <mechanicalReduction>7</mechanicalReduction>
+            <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
+    
+    <transmission name="right_wheel_transmission">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="RW_base_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
+        </joint>
+        <actuator name="right_wheel_actuator">
+            <mechanicalReduction>7</mechanicalReduction>
+            <hardwareInterface>VelocityJointInterface</hardwareInterface>
+        </actuator>
+    </transmission>
 
 
 </robot>
