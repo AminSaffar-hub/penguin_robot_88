@@ -1,6 +1,7 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <rosparam file="$(find penguin_description)/config/penguin_control.yaml" command="load"/>
+    <!--rosparam file="$(find penguin_description)/config/gazebo_ros_param.yaml" command="load"/-->
     <!--load the controllers-->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/penguin" args="move_base_controller"/>
