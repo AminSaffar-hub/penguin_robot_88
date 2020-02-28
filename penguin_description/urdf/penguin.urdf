@@ -134,7 +134,7 @@
     </link>
     <link name="kinect_link">
         <visual >
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 1.5707"/>
             <geometry>
                 <mesh filename="package://penguin_description/models/meshes/kinect.dae" />
             </geometry>
@@ -189,7 +189,7 @@
     </joint>
     <joint name="kinect_base_joint" type="fixed">
         <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0"/>
-        <parent link="base_link"/>
+        <parent link="camera_rgb_frame"/>
         <child link="kinect_link"/>
     </joint>
 <!--friction and stiffness-->
@@ -277,7 +277,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_depth_optical_frame</frameName>
+          <frameName>camera_depth_optical_link</frameName>
           <baseline>0.1</baseline>
           <distortion_k1>0.0</distortion_k1>
           <distortion_k2>0.0</distortion_k2>
@@ -288,5 +288,47 @@
         </plugin>
       </sensor>
     </gazebo>
+<!--kinect frames--> 
+ <joint name="camera_rgb_joint" type="fixed">
+    <origin rpy="0 0 -1.5707" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="camera_rgb_frame"/>
+  </joint>
+  <link name="camera_rgb_frame"/>
+        
+
+        
     
+  
+  
+  
+  <joint name="camera_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 -1.57079632679" />
+      <parent link="camera_rgb_frame" />
+      <child link="camera_rgb_optical_frame" />
+    </joint>
+    <link name="camera_rgb_optical_frame"/>
+
+
+
+    
+
+    <joint name="camera_depth_joint" type="fixed">
+	  <origin xyz="0 0.0 0" rpy="0 0 0" />
+	  <parent link="camera_rgb_frame" />
+	  <child link="camera_depth_frame" />
+	</joint>
+	<link name="camera_depth_frame"/>
+
+
+
+
+    <joint name="camera_depth_optical_joint" type="fixed">
+	  <origin xyz="0 0 0" rpy="0 0 -1.57079632679" />
+	  <parent link="camera_depth_frame" />
+	  <child link="camera_depth_optical_frame" />
+	</joint>
+	<link name="camera_depth_optical_frame"/>
+
+
 </robot>
