@@ -13,7 +13,7 @@ penguin:
     # URDF if not specified as a parameter
     wheel_separation : 0.16
     wheel_radius : 0.0315
-    
+    pid: {p: 10 ,i: 0.01 ,d: 0.0 }
 
     # Wheel separation and radius multipliers
     wheel_separation_multiplier: 1.0 # default: 1.0
@@ -43,4 +43,4 @@ penguin:
         has_acceleration_limits: true
         max_acceleration       : 1.5  # rad/s^2
         has_jerk_limits        : true
-        max_jerk               : 2.5  # rad/s^3
+        max_jerk               : 5.0  # rad/s^3

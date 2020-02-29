@@ -80,9 +80,11 @@
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/>
+                <!--mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/-->
+                <!--cylinder radius="0.001" length="0.02"/-->
+                <sphere radius="0.01"/>
             </geometry>
         </collision>
         <inertial>
@@ -100,9 +102,11 @@
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/>
+                <!--mesh filename="package://penguin_description/models/meshes/caster_wheels.dae"/-->
+                <!--cylinder radius="0.001" length="0.02"/-->
+                <sphere radius="0.01"/>
             </geometry>
         </collision>
         <inertial>
@@ -164,23 +168,21 @@
         <child link="LW_link"/>
         <axis xyz="0.0 -1 0.0"/>
         <limit effort="100" velocity="100"/>
-        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <joint name="RW_base_joint" type="continuous">
         <origin xyz="-0.08 0.003 0.0315" rpy="0.0 0.0 -1.5707"/>
         <parent link="base_link"/>
         <child link="RW_link"/>
         <axis xyz="0.0 1 0.0"/>
-        <limit effort="100" velocity="100"/>
-        <dynamics damping="0.0" friction="0.0"/>    
+        <limit effort="100" velocity="100"/>   
     </joint>
     <joint name="TCW_base_joint" type="fixed">
-        <origin xyz="0.0 0.092 0.001" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.092 0.0001" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="TCW_link"/>
     </joint>
     <joint name="DCW_base_joint" type="fixed">
-        <origin xyz="0.0 -0.085 0.001" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 -0.085 0.0001" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="DCW_link"/>
     </joint>
@@ -190,7 +192,7 @@
         <child link="upper_base_link"/>
     </joint>
     <joint name="kinect_base_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 -1.57079632679"/>
         <parent link="camera_rgb_frame"/>
         <child link="kinect_link"/>
     </joint>
@@ -211,11 +213,12 @@
 	    <kd>100.0</kd>
 	    <minDepth>0.001</minDepth>
 	    <maxVel>1.0</maxVel>
+        
 	  </gazebo>
 	  
 	  <gazebo reference="TCW_link">
-	    <mu1>0.0</mu1>
-	    <mu2>0.0</mu2>
+	    <mu1>0.02</mu1>
+	    <mu2>0.02</mu2>
 	    <kp>1000000.0</kp>
 	    <kd>100.0</kd>
 	    <minDepth>0.001</minDepth>
@@ -223,8 +226,8 @@
 	  </gazebo>
 	  
 	  <gazebo reference="DCW_link">
-	    <mu1>0.0</mu1>
-	    <mu2>0.0</mu2>
+	    <mu1>0.02</mu1>
+	    <mu2>0.02</mu2>
 	    <kp>1000000.0</kp>
 	    <kd>100.0</kd>
 	    <minDepth>0.001</minDepth>
@@ -292,7 +295,7 @@
     </gazebo>
 <!--kinect frames--> 
  <joint name="camera_rgb_joint" type="fixed">
-    <origin rpy="0 0 -1.5707" xyz="0 0 0"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="camera_rgb_frame"/>
   </joint>
@@ -326,23 +329,5 @@
 	  <child link="camera_depth_optical_frame" />
 	</joint>
 	<link name="camera_depth_optical_frame"/>
-<!-- differential drive -->
-
-  <!--gazebo>
-    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
-      <legacyMode>true</legacyMode>
-      <updateRate>20</updateRate>
-      <leftJoint>LW_base_joint</leftJoint>
-      <rightJoint>RW_base_joint</rightJoint>
-      <wheelSeparation>0.16</wheelSeparation>
-      <wheelDiameter>0.0315</wheelDiameter>
-      <torque>20</torque>
-      <commandTopic>/penguin/move_base_controller/cmd_vel</commandTopic>
-      <odometryTopic>/penguin/move_base_controller/odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>base_footprint</robotBaseFrame>
-    </plugin>
-  </gazebo-->
 
 </robot>
