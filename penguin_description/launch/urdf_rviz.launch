@@ -10,6 +10,8 @@
 
     <!--combine joint values-->
     <node name ="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
+ 
+ 
 
     <!--show in Rviz-->
     <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find my_mira_pkg)/rviz_config/urdf.rviz"/-->

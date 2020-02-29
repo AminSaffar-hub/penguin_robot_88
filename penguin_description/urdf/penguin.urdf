@@ -11,9 +11,7 @@
 
 <!--links-->
 
-    <link name="dummy_link">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-    </link>
+    <link name="base_footprint"/>
     <link name="base_link">
         <inertial>
             <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 0.0"/>
@@ -155,9 +153,9 @@
     </link>
 
 <!--joints-->
-    <joint name="dummy_joint" type="fixed">
+    <joint name="base_footprint_joint" type="fixed">
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <parent link="dummy_link"/>
+        <parent link="base_footprint"/>
         <child link="base_link"/>
     </joint>
     <joint name="LW_base_joint" type="continuous">
@@ -165,12 +163,16 @@
         <parent link="base_link"/>
         <child link="LW_link"/>
         <axis xyz="0.0 -1 0.0"/>
+        <limit effort="100" velocity="100"/>
+        <dynamics damping="0.0" friction="0.0"/>
     </joint>
     <joint name="RW_base_joint" type="continuous">
         <origin xyz="-0.08 0.003 0.0315" rpy="0.0 0.0 -1.5707"/>
         <parent link="base_link"/>
         <child link="RW_link"/>
         <axis xyz="0.0 1 0.0"/>
+        <limit effort="100" velocity="100"/>
+        <dynamics damping="0.0" friction="0.0"/>    
     </joint>
     <joint name="TCW_base_joint" type="fixed">
         <origin xyz="0.0 0.092 0.001" rpy="0.0 0.0 0.0"/>
@@ -237,7 +239,7 @@
         </joint>
         <actuator name="left_wheel_actuator">
             <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
         </actuator>
     </transmission>
     
@@ -248,7 +250,7 @@
         </joint>
         <actuator name="right_wheel_actuator">
             <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
         </actuator>
     </transmission>
 <!--sensors-->
@@ -296,11 +298,6 @@
   </joint>
   <link name="camera_rgb_frame"/>
         
-
-        
-    
-  
-  
   
   <joint name="camera_rgb_optical_joint" type="fixed">
       <origin xyz="0 0 0" rpy="0 0 -1.57079632679" />
@@ -329,6 +326,23 @@
 	  <child link="camera_depth_optical_frame" />
 	</joint>
 	<link name="camera_depth_optical_frame"/>
+<!-- differential drive -->
 
+  <!--gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
+      <legacyMode>true</legacyMode>
+      <updateRate>20</updateRate>
+      <leftJoint>LW_base_joint</leftJoint>
+      <rightJoint>RW_base_joint</rightJoint>
+      <wheelSeparation>0.16</wheelSeparation>
+      <wheelDiameter>0.0315</wheelDiameter>
+      <torque>20</torque>
+      <commandTopic>/penguin/move_base_controller/cmd_vel</commandTopic>
+      <odometryTopic>/penguin/move_base_controller/odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo-->
 
 </robot>

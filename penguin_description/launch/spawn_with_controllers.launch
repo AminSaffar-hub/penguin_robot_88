@@ -7,6 +7,9 @@
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
+
+
+
     <include file="$(find penguin_description)/launch/spawn_penguin.launch"/>
     <include file="$(find penguin_description)/launch/penguin_control.launch"/>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -17,6 +20,9 @@
         <arg name="headless" value="$(arg headless)"/>
         <arg name="debug" value="$(arg debug)"/>
     </include>
+    
+
+    
     <!-- Fake laser -->
     <node pkg="nodelet" type="nodelet" name="laserscan_nodelet_manager" args="manager"/>
     <node pkg="nodelet" type="nodelet" name="depthimage_to_laserscan"
