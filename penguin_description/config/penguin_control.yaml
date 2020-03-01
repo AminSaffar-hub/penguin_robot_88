@@ -43,4 +43,4 @@ penguin:
         has_acceleration_limits: true
         max_acceleration       : 1.5  # rad/s^2
         has_jerk_limits        : true
-        max_jerk               : 5.0  # rad/s^3
+        max_jerk               : 10.0  # rad/s^3
