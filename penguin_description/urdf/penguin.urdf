@@ -4,30 +4,33 @@
     <gazebo>
         <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
                 <robotNamespace>/penguin</robotNamespace>
-                <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+                <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
                 <legacyModeNS>true</legacyModeNS>
         </plugin>
     </gazebo>
 
 <!--links-->
 
-    <link name="base_footprint"/>
+    <link name="base_footprint">
+        <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 1.57079632679"/>
+    </link>
     <link name="base_link">
         <inertial>
-            <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 1.57079632679"/>
             <mass value="0.160"/>
             <inertia ixx="0.0069858" ixy="0.00003788" ixz="-0.000743414" iyy="0.0070844" iyz="-0.00030005" izz="0.0008453"/>
         </inertial>
         <visual name="">
-            <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 1.57079632679"/>
             <geometry>
                 <mesh filename="package://penguin_description/models/meshes/base.dae" />   
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 0.0095" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.007" rpy="0.0 0.0 1.57079632679"/>
             <geometry>
-                <cylinder radius="0.105" length="0.005"/>
+                <!--cylinder radius="0.105" length="0.005"/-->
+                <mesh filename="package://penguin_description/models/meshes/base.dae" />
             </geometry>
         </collision>
     </link>
@@ -128,7 +131,7 @@
             <inertia ixx="0.172784748" ixy="0.000573265" ixz="-0.01351310072" iyy="0.0174117895" iyz="-0.007081193" izz="0.00756976136"/>
         </inertial>
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.00" rpy="0.0 0.0 0.0"/>
             <geometry>
                 <mesh filename="package://penguin_description/models/meshes/upper_base.dae" />
             </geometry>
@@ -142,7 +145,7 @@
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 1.5707"/>
   	        <geometry>
   	            <box size="0.07271 0.27794 0.073"/>
   	        </geometry>
@@ -163,75 +166,66 @@
         <child link="base_link"/>
     </joint>
     <joint name="LW_base_joint" type="continuous">
-        <origin xyz="0.08 0.003 0.0315" rpy="0.0 0.0 1.5707"/>
+        <origin xyz="-0.004 0.08  0.0314" rpy="0.0 0.0 3.1404"/>
         <parent link="base_link"/>
         <child link="LW_link"/>
         <axis xyz="0.0 -1 0.0"/>
         <limit effort="100" velocity="100"/>
     </joint>
     <joint name="RW_base_joint" type="continuous">
-        <origin xyz="-0.08 0.003 0.0315" rpy="0.0 0.0 -1.5707"/>
+        <origin xyz="-0.004 -0.08  0.0314" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="RW_link"/>
         <axis xyz="0.0 1 0.0"/>
         <limit effort="100" velocity="100"/>   
     </joint>
     <joint name="TCW_base_joint" type="fixed">
-        <origin xyz="0.0 0.092 0.0001" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.092 0.0  0.000" rpy="0.0 0.0 1.57079632679"/>
         <parent link="base_link"/>
         <child link="TCW_link"/>
     </joint>
     <joint name="DCW_base_joint" type="fixed">
-        <origin xyz="0.0 -0.085 0.0001" rpy="0.0 0.0 0.0"/>
+        <origin xyz="0.085 0.0  0.000" rpy="0.0 0.0 1.57079632679"/>
         <parent link="base_link"/>
         <child link="DCW_link"/>
     </joint>
     <joint name="upper_base_joint" type="fixed">
-        <origin xyz="0.0 0.004 0.005" rpy="0.0 0.0 0.0"/>
+        <origin xyz="-0.004 0.0  0.005" rpy="0.0 0.0 1.57079632679"/>
         <parent link="base_link"/>
         <child link="upper_base_link"/>
     </joint>
     <joint name="kinect_base_joint" type="fixed">
-        <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 -1.57079632679"/>
+        <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0"/>
         <parent link="camera_rgb_frame"/>
         <child link="kinect_link"/>
     </joint>
 <!--friction and stiffness-->
-      <gazebo reference="WL_link">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
+      <gazebo reference="LW_link">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
 	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
-	    <minDepth>0.001</minDepth>
-	    <maxVel>1.0</maxVel>
+	    <kd>1.0</kd>
 	  </gazebo>
 	
-	  <gazebo reference="WR_link">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
+	  <gazebo reference="RW_link">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
 	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
-	    <minDepth>0.001</minDepth>
-	    <maxVel>1.0</maxVel>
-        
+	    <kd>1.0</kd>
 	  </gazebo>
 	  
 	  <gazebo reference="TCW_link">
-	    <mu1>0.02</mu1>
-	    <mu2>0.02</mu2>
+	    <mu1>0.0</mu1>
+	    <mu2>0.0</mu2>
 	    <kp>1000000.0</kp>
 	    <kd>100.0</kd>
-	    <minDepth>0.001</minDepth>
-	    <maxVel>1.0</maxVel>
 	  </gazebo>
 	  
 	  <gazebo reference="DCW_link">
-	    <mu1>0.02</mu1>
-	    <mu2>0.02</mu2>
+	    <mu1>0.0</mu1>
+	    <mu2>0.0</mu2>
 	    <kp>1000000.0</kp>
 	    <kd>100.0</kd>
-	    <minDepth>0.001</minDepth>
-	    <maxVel>1.0</maxVel>
 	  </gazebo>
 
 <!--transmissions-->
@@ -303,7 +297,7 @@
         
   
   <joint name="camera_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 -1.57079632679" />
+      <origin xyz="0 0 0" rpy="0 0 0.0" />
       <parent link="camera_rgb_frame" />
       <child link="camera_rgb_optical_frame" />
     </joint>
@@ -324,7 +318,7 @@
 
 
     <joint name="camera_depth_optical_joint" type="fixed">
-	  <origin xyz="0 0 0" rpy="0 0 -1.57079632679" />
+	  <origin xyz="0 0 0" rpy="0 0 0.0" />
 	  <parent link="camera_depth_frame" />
 	  <child link="camera_depth_optical_frame" />
 	</joint>
