@@ -20,14 +20,13 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "math.h"
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,9 +58,9 @@ UART_HandleTypeDef huart2;
 #define PI 3.1415f
 #define RayonR 62.5f
 #define RayonL 62.5f
-#define entraxe 160.0f
-#define coefK 200
-#define TIMEINTERVAL 0.01
+#define entraxe 149.0f
+#define coefK 300//200
+#define TIMEINTERVAL 1 // 0.01
 #define KV 350
 #define KI 0.00009
 #define KD 5000
@@ -82,18 +81,19 @@ float dC = 0.0f;
 double X = 0.0;
 double Y = 0.0;
 double PHI = 0.0;
+double PHI_degrees = 0.0;
 float TargetDistance;
 float CrtlR;
 float CrtlL;
-float PMWbaseR=1000;
-float PMWbaseL=1000;
+float PMWbaseR=1500;//1000
+float PMWbaseL=1500;//1000
 float PMWR;
 float PMWL;
 float erreur;
-float PMWRMAX=3000;
-float PMWLMAX=3000;
-float PMWRMIN=1000;
-float PMWLMIN=1000;
+float PMWRMAX=4100;//3000
+float PMWLMAX=4100;//3000
+float PMWRMIN=700;//1000
+float PMWLMIN=700;//1000
 char s[20];
 char ExtInfo1[20];
 char ExtInfo2[20];
@@ -122,6 +122,10 @@ float erreurNowL;
 float difDerivaR;
 float difDerivaL;
 
+int ErrAngle ;
+float VrightC =0.4, VleftC=0.4 ;
+double result;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -135,6 +139,7 @@ static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 void initEncoder(void);
 float tickstoDistance(int,float);
+float rad_to_deg(double);
 void CalculationFunction(void);
 void initMotors(void);
 void RunForward(int,int);
@@ -144,33 +149,36 @@ void Rotate(int,int);
 void stopp(void);
 void VelocityControl(int,int);
 void VelocityAsserv(float,float);
-void Trapezy(float);
+void VelocityAsserv2(float,float);
+void gotoXY(float);
+void gotoXY2(float,float,float );
+void Trapezy(float , float  ,float  , float  );
 void Move(int,int,int);
 int checkStop(void);
 int CompareString(uint8_t*,char*,int);
 void DataConverting(uint8_t*);
 void ExtractInfo(uint8_t* ,int );
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)	
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if (htim->Instance==TIM7) //check if the interrupt comes from TIM7
 				{
 					CalculationFunction();
 					CountEntry++;
+					//HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
 				}
-				
-						
+
+
 	}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-uint8_t data[20]="75.5 66.6 90.0\n";
-uint8_t dataIn[20];
+uint8_t data[20]="75.5 66.6 90.0a";
+uint8_t dataIn[30] ;
 char  DataOut[20];
-uint8_t	TestIn [20];
-int result = 0;
-float Tab,Tab2;
-	
+uint8_t	TestIn [20]="75.5a66.6a90.5a";
+float Tab = 0.0 ,Tab2 = 0.0 ,Tab3 = 0.0;
+
 /* USER CODE END 0 */
 
 /**
@@ -212,40 +220,18 @@ int main(void)
 	 initEncoder();
 	 initMotors();
 	 stopp();
-	 TestIn[0] = 49;
-	 TestIn[1] = 46;
-	 TestIn[2] = 51;
-	 TestIn[3] = 97;
-	 TestIn[4] = 52;
-	 TestIn[5] = 53;
-	 TestIn[6] = 54;
-	 TestIn[7] = 97;
-	 /*Test Motor Direction 
-	 
-	 Rotate(1500,1);
-	 RunForward(1500,1500);
-	 HAL_Delay(500);
+	//VelocityAsserv(0.6,0.3);
+	 //gotoXY2(900,500,0.0);
+	// HAL_Delay(1000);
+	// gotoXY2(0,0,0.0);
+	 //Move(1000,2000,2000);
+	 //RunForward(1500,1500);
+	// HAL_Delay(2000);
 	 stopp();
-	 */
-	 //Rotate(2000,-1);
-	 //RunBackward(2000,2000);
-	 //RunForward(2000,2000);
-	 //RunToGoal(-2000,2300);
-	//HAL_Delay(1000);
-	 //Move(1500,2000,2000);
-	 //stopp();
-	VelocityAsserv(0.0001,0.00005);
-	 // Test Moving Distance
-	 /*while (DistR<300)
-	 {
-		 RunToGoal(2000,2000);
-	 }
-	 stopp();
-	 */
-	 ExtractInfo(TestIn,9);
-	// sprintf(s,"123");
+	 /*ExtractInfo(TestIn,20);
 	 Tab = atof(ExtInfo1);
 	 Tab2 = atof(ExtInfo2);
+	 Tab3 = atof(ExtInfo3);*/
   /* USER CODE END 2 */
  
  
@@ -257,20 +243,31 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		
-		/* Communication Test
-		HAL_UART_Receive(&huart2,(uint8_t*)dataIn,10,100);
+
+		 //Communication Test
+		/*HAL_UART_Receive(&huart2,(uint8_t*)dataIn,10,100);
 		result = CompareString(dataIn,"abc",4);
 		if( result)
 		{
-			HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
+		HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
 		HAL_Delay(100);
-		}
-		
+		result =  0;
+		}*/
 
+		HAL_UART_Receive(&huart2,(uint8_t*)dataIn,20,100);
+		ExtractInfo(dataIn,20);
+		Tab = atof(ExtInfo1);
+	    Tab2 = atof(ExtInfo2);
+		Tab3 = atof(ExtInfo3);
+				if (( Tab == 0.5f)&&( Tab2 == 0.2f)&&( Tab3 == 0.3f))
+				{
+				HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
+				HAL_Delay(100);
+				//for (int i = 0 ; i<30;i++) dataIn[i] = 0;
+				}
 		//HAL_UART_Transmit(&huart2,data,20,1000);
-		*/
-		
+
+
 	}
   /* USER CODE END 3 */
 }
@@ -518,7 +515,7 @@ static void MX_TIM7_Init(void)
 
   /* USER CODE END TIM7_Init 1 */
   htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 83;
+  htim7.Init.Prescaler = 90;
   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim7.Init.Period = 999;
   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -610,7 +607,7 @@ void RunForward(int VR,int VL)
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,0);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_3,VL);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,0);
-	
+
 }
 void RunBackward(int VR,int VL)
 {
@@ -618,7 +615,7 @@ void RunBackward(int VR,int VL)
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,VR);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_3,0);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,VL);
-	
+
 }
 
 
@@ -635,12 +632,12 @@ else{
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_3,VR);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_4,0);
 }
-	
-	
+
+
 }
 void RunToGoal(int VR,int VL)
 {
-	
+
 	if ((VR>0)&&(VL>0)){
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_1,VR);
 	__HAL_TIM_SetCompare(&htim1,TIM_CHANNEL_2,0);
@@ -683,67 +680,74 @@ void initMotors()
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_4);
 	stopp();
-	
+
 }
 float tickstoDistance(int ticks,float R)
 {
 	return((PI*R*ticks)/(resolution*presicion));
 }
-
+float rad_to_deg(double x){
+			return(x*360/(2*PI));
+		}
+float deg_to_rad(double x){
+			return(x*PI/(180));
+		}
 void CalculationFunction()
 {
-	
+
 			TicksRightNow = TIM2->CNT ;
 			TicksLeftNow = TIM3->CNT ;
-	
+
 			//DistR = tickstoDistance(TicksRightNow,RayonR);
 			//DistL = tickstoDistance(TicksLeftNow,RayonL);
-	
+
 			DiffR = (TicksRightNow - TicksRightPrev);
 			DiffL =(TicksLeftNow - TicksLeftPrev);
 			TicksRightPrev = TicksRightNow;
 			TicksLeftPrev  = TicksLeftNow;
-	
-			if (DiffR > 50000) 
+
+			if (DiffR > 50000)
 			{
 			   DiffR = DiffR - 65535 ;
 			}
-			else if (DiffR < -50000) 
+			else if (DiffR < -50000)
 			{
 			   DiffR = DiffR + 65535 ;
 			}
-			
-			if (DiffL > 50000) 
+
+			if (DiffL > 50000)
 			{
 			   DiffL = DiffL - 65535 ;
 			}
-			else if (DiffL < -50000) 
+			else if (DiffL < -50000)
 			{
 			   DiffL = DiffL + 65535 ;
 			}
-			
+
 			dR = tickstoDistance(DiffR,RayonR);
 			dL = tickstoDistance(DiffL,RayonL);
 			dC = (dR + dL)/2;
-			
+
 			DistR += dR;
 			DistL += dL;
-			if (CountEntry >1) 
-			{
+		//	if (CountEntry >1)
+		//	{
 				distnowR = DistR;
 				distnowL = DistL;
-			VelocityRight = ((distnowR - distprevR) * 0.001) / (1000*TIMEINTERVAL) ;
-			VelocityLeft =  ((distnowL - distprevL) * 0.001) / (1000*TIMEINTERVAL) ;
-				CountEntry = 0;
+			//VelocityRight = ((distnowR - distprevR) * 0.001) / (1000*TIMEINTERVAL) ;
+			//VelocityLeft =  ((distnowL - distprevL) * 0.001) / (1000*TIMEINTERVAL) ;
+			VelocityRight = ((distnowR - distprevR) * 0.001) / (0.001*TIMEINTERVAL) ;
+			VelocityLeft =  ((distnowL - distprevL) * 0.001) / (0.001*TIMEINTERVAL) ;
+				//CountEntry = 0;
 				distprevR = DistR;
 				distprevL = DistL;
 				enter++;
-			}
+		//	}
 			// odometry :
 			X += dC*cos(PHI);
 			Y += dC*sin(PHI);
 			PHI += ((dR-dL)/entraxe);
-			
+			PHI_degrees = rad_to_deg(PHI);
 			while (PHI>PI)
 			{
 				PHI -= 2*PI;
@@ -752,7 +756,7 @@ void CalculationFunction()
 			{
 				PHI += 2*PI;
 			}
-	
+
 }
 
 void VelocityControl(int VR,int VL)
@@ -761,18 +765,18 @@ void VelocityControl(int VR,int VL)
 	if (VL>PMWLMAX)  PMWL = PMWLMAX;
 	if (VR<PMWRMIN)  PMWR = PMWRMIN;
 	if (VL<PMWLMIN)  PMWL = PMWLMIN;
-	
-	
-	
+
+
+
 }
 int checkStop()
 {
-	if ((DistR<TargetDistance-5) || (DistL<TargetDistance-5)) return (1);
+	if ((DistR<TargetDistance-3) || (DistL<TargetDistance-3)) return (1);
 	else if ((DistR>TargetDistance+5) || (DistL>TargetDistance+5)) return (1);
 	else  return (0);
-	
+
 }
-int signe(float x) 
+int signe(float x)
 {
 	if (x>0) return (1);
 	if (x<0) return (-1);
@@ -780,17 +784,17 @@ int signe(float x)
 }
 
 
-void Trapezy(float Dist)
+void Trapezy(float VRM , float VLM ,float Tar , float DistBegin )
 {
-	float DC = (DistR + DistL)/2.0f ;
-	if (DC<(0.5*Dist)) {VLeft = ((Vmax - Vmin)/(0.5*Dist)) * DC;VRight = ((Vmax - Vmin)/(0.5*Dist)) * DC;}
-	//else if (DistR>(0.7*Dist)) {VLeft -= (Vmax/(0.3*Dist)) * DC;VRight -= (Vmax/(0.3*Dist)) * DC;}
-	else {VLeft = Vmax;VRight = Vmax;}
-	
-	if (VLeft > Vmax) VLeft = Vmax;
-	if (VRight > Vmax) VRight = Vmax;
+	if (fabs(DistR) <= fabs(DistBegin)) PMWR = PMWbaseR + ((VRM-PMWbaseR)/DistBegin) * DistR;
+	if (fabs(DistL) <= fabs(DistBegin)) PMWL = PMWbaseR + ((VLM-PMWbaseL)/DistBegin) * DistL;
 
-	
+	if (fabs(DistR) > fabs(Tar) - fabs(DistBegin)) PMWR = VRM - ((VRM-PMWbaseR)/DistBegin) * (DistR -(fabs(Tar) - fabs(DistBegin)));
+	if (fabs(DistL) > fabs(Tar) - fabs(DistBegin)) PMWL = VLM - ((VLM-PMWbaseL)/DistBegin) * (DistL -(fabs(Tar) - fabs(DistBegin)));
+
+
+
+
 }
 void VelocityAsserv(float V1 ,float V2 )
 {
@@ -814,33 +818,166 @@ void VelocityAsserv(float V1 ,float V2 )
 			difDerivaL =  erreurNowL-erreurPrevDL ;
 			Rv = KV*DfVR + KI * erreurIR +KD * difDerivaR;
 			Lv = KV*DfVL + KI * erreurIL +KD * difDerivaL;
-			
-			PMWR = PMWR + Rv ; 
+
+			PMWR = PMWR + Rv ;
 			PMWL = PMWL + Lv ;
 			VelocityControl(PMWR,PMWL);
 			RunToGoal(PMWR,PMWL);
-			
+
 		}
 		stopp();
 
-	
+
 }
+
+/*void roll (float angle )
+{	int sens;
+	float DistanceToGo = (entraxe/2) * deg_to_rad(angle) ;
+	if (angle>0) sens = 1;
+	else sens = -1;
+
+	while ((DistR < DistanceToGo-2) &&)
+}*/
+void VelocityAsserv2(float V1 ,float V2 )
+{
+	//PMWbaseR*=signe(PMWbaseR);
+	//PMWbaseL*=signe(PMWbaseL);
+	PMWR = PMWbaseR;
+	PMWL = PMWbaseL;
+
+	  //(DistR < 1000)
+		 //Trapezy(500);
+			DfVR =  V1-VelocityRight  ;
+			DfVL = V2-VelocityLeft ;
+			if (DfVR>10) testV = 12;
+			else testV = 1;
+			if (DfVL>10) testV=12 ;
+			else testV=1;
+			erreurIR += DfVR;
+			erreurIL += DfVL;
+			difDerivaR =  erreurNowR-erreurPrevDR ;
+			difDerivaL =  erreurNowL-erreurPrevDL ;
+			Rv = KV*DfVR + KI * erreurIR +KD * difDerivaR;
+			Lv = KV*DfVL + KI * erreurIL +KD * difDerivaL;
+			if (V1 == 0.0) PMWR = 0.0;
+			if (V2 == 0.0) PMWL = 0.0;
+			PMWR = PMWR + Rv ;
+			PMWL = PMWL + Lv ;
+			VelocityControl(PMWR,PMWL);
+			RunToGoal(PMWR,PMWL);
+
+
+
+}
+void gotoXY(float angle )
+{
+	int ErrAngle ;
+	float VrightC =0.4, VleftC=0.4 ;
+	while (1)
+	{
+			ErrAngle = angle - PHI_degrees ;
+
+			VrightC += 0.7 * ErrAngle ;
+			VleftC  += -VrightC;
+
+			if (VrightC>1.4)  VrightC = 1.4;
+			if (VleftC>1.4)  VleftC = 1.4;
+			if (VrightC<0.4)  VrightC = 0.4;
+			if (VleftC<0.4)  VleftC = 0.4;
+
+			VelocityAsserv2(VrightC,VleftC);
+	}
+}
+
+
+void gotoXY2(float XGoal,float YGoal,float angle )
+{
+
+		result = rad_to_deg(atan2((YGoal-Y),(XGoal-X)));
+	while ((fabs(YGoal-Y)>5)||(fabs(XGoal-X)>5))
+	{		result = rad_to_deg(atan2((YGoal-Y),(XGoal-X)));
+			ErrAngle = result - PHI_degrees ;
+
+			VrightC = 0.4 + 0.3 * ErrAngle ;
+			VleftC  =  0.4 - 0.3 * ErrAngle;
+
+			if (VrightC>1.5)  VrightC = 1.5;
+			if (VleftC>1.5)  VleftC = 1.5;
+			if (VrightC<0.2)  VrightC = 0.0;
+			if (VleftC<0.2)  VleftC = 0.0;
+
+			VelocityAsserv2(VrightC,VleftC);
+	}
+	stopp();
+}
+
+
 void Move(int Distance,int VR,int VL)
 {
+	int a ;
+	//int Checked = 0;
 	TargetDistance = Distance;
-	while ( checkStop())
-	{
-		erreur = DistR-DistL ;
-		CrtlR = -coefK*erreur ;
+
+		if (Distance > 0 )
+		{
+			PMWR = PMWbaseR;
+			PMWL = PMWbaseL;
+				a = 1;
+		}
+		else
+		{
+			PMWR = -PMWbaseR;
+			PMWL = -PMWbaseL;
+			a = -1;
+		}
+
+	while ( ((DistR<TargetDistance-3) || (DistL<TargetDistance-3)))
+	{	Trapezy(VR,VL,TargetDistance,250);
+
+		erreur = fabs(DistR)- fabs(DistL) ;
+		CrtlR = -coefK*erreur*a ;
 		CrtlL = -CrtlR;
-		
-		PMWR = PMWbaseR+CrtlR;
-		PMWL = PMWbaseL+CrtlL;
-		
-		//VelocityControl(PMWR,PMWL);
-		
+
+		PMWR += CrtlR;
+		PMWL += CrtlL;
+
+		VelocityControl(fabs(PMWR),fabs(PMWL));
+
 		RunToGoal(PMWR,PMWL);
 	}
+/*
+	while (Checked)
+	{
+		if ((DistR > TargetDistance+2) && (DistL > TargetDistance+2))
+			{
+				PMWR = -a*PMWRMIN;
+				PMWL = -a*PMWLMIN;
+
+			}
+		if ((DistR > TargetDistance+2) && (DistL < TargetDistance-2))
+				{
+					PMWR = -a*PMWRMIN;
+					PMWL = a*PMWLMIN;
+
+				}
+		if ((DistR < TargetDistance-2) && (DistL > TargetDistance+2))
+					{
+						PMWR = a*PMWRMIN;
+						PMWL = -a*PMWLMIN;
+
+					}
+		if ((DistR < TargetDistance-2) && (DistL < TargetDistance-2))
+						{
+							PMWR = a*PMWRMIN;
+							PMWL = a*PMWLMIN;
+
+						}
+		if ((DistR > TargetDistance-2) && (DistR < TargetDistance+2) && (DistL > TargetDistance-2) &&(DistL < TargetDistance+2))
+			Checked = 1;
+
+		RunToGoal(PMWR,PMWL);
+	}
+*/
 	stopp();
 }
 
@@ -852,12 +989,12 @@ int CompareString(uint8_t* Data,char* ch,int length)
 }
 void DataConverting(uint8_t* Data)
 {
-	
-		for (int i =0;i<10;i++)
+
+		for (int i =0;i<20;i++)
 		{
 			DataOut[i]=(char)Data[i];
 		}
-		
+
 }
 void ExtractInfo(uint8_t* Data,int length)
 {
@@ -870,12 +1007,12 @@ void ExtractInfo(uint8_t* Data,int length)
 	{
 		if (DataOut[i] =='a')
 		{
-			
+
 						switch (index)
 						{
 							case 0 :
 							{
-								for (int j = offsetInf;j<offsetSup;j++) 
+								for (int j = offsetInf;j<offsetSup;j++)
 									{
 										ExtInfo1[k] = DataOut[j];
 										k++;
@@ -887,32 +1024,32 @@ void ExtractInfo(uint8_t* Data,int length)
 							}
 							case 1 :
 							{
-								for (int j = offsetInf;j<offsetSup;j++) 
+								for (int j = offsetInf;j<offsetSup;j++)
 									{
 										ExtInfo2[k] = DataOut[j];
 										k++;
 									}
 									k=0;
-									offsetInf = offsetSup;
+									offsetInf = offsetSup+1;
 									index++;
 									break;
 							}
 							case 2 :
 							{
-								for (int j = offsetInf;j<offsetSup;j++) 
+								for (int j = offsetInf;j<offsetSup;j++)
 									{
 										ExtInfo3[k] = DataOut[j];
 										k++;
 									}
 									k=0;
-									offsetInf = offsetSup;
+									offsetInf = offsetSup+1;
 									index++;
 									break;
 							}
 						}
 			offsetSup+=1;
 		}
-		else 
+		else
 			offsetSup++;
 	}
 }
