@@ -1,3 +1,16 @@
 <launch>
     <group ns="rtabmap">
-        
+        <node name ="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="--delete_db_on_start">
+            <rosparam command="load" file="$(find penguin_rtab)/config/rtab.yaml"/>
+            
+            <remap from="odom" to="/penguin/move_base_controller/odom"/>
+            <remap from="scan" to="/scan"/>
+
+            <remap from="camera_depth_optical_link" to="camera_depth_optical_frame"/>
+            <remap from="rgb/image" to="/camera/rgb/image_raw"/>
+            <remap from="depth/image" to="/camera/depth/image_raw"/>
+            <remap from="rgb/camera_info" to="/camera/depth/camera_info"/>
+        </node>
+    </group>
+    <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find penguin_rtab)/rviz/model.rviz"/-->
+</launch>
