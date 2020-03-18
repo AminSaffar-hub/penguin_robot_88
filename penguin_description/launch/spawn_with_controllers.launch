@@ -34,7 +34,7 @@
         <remap from="scan" to="/scan"/>
     </node >
 
-    <node name="rviz" pkg="rviz" type="rviz" args=""/>
+    <!--node name="rviz" pkg="rviz" type="rviz" args=""/-->
 
     <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
         <param name="default_topic" value="/penguin/move_base_controller/cmd_vel"/> 
