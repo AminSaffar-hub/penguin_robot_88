@@ -1,20 +1,20 @@
 frame_id: "base_link"
 
-queue_size: "10"
+queue_size: 10
 
 subscribe_depth: true
 subscribe_scan: true
 
-RGBD/NeighborLinkRefining: "true"
-RGBD/ProximityBySpace: "true"
-RGBD/ProximityPathMaxNeighbors: "10"
+
+RGBD/ProximityBySpace: "false"
+
 RGBD/AngularUpdate: "0.01"
 RGBD/linearUpdate: "0.01"
 RGBD/OptimizeFromGraphEnd: "false"
 Optimizer/Slam2D: "true"
-Reg/Strategy: "1"
+
 Reg/Force3DoF: "true"
-Vis/MinInliers: "5"
-Vis/InlierDistance: "0.1"
-Rtabmap/TimerThr: "700"
-Mem/RehearsalSimilarity: "0.045"
+Vis/MinInliers: "12"
+
+
+

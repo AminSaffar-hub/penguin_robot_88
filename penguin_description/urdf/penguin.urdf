@@ -325,7 +325,7 @@
         
   
   <joint name="camera_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 0 0.0" />
+      <origin xyz="0 0 0" rpy="-1.5707 0 -1.5707" />
       <parent link="camera_rgb_frame" />
       <child link="camera_rgb_optical_frame" />
     </joint>
@@ -346,7 +346,7 @@
 
 
     <joint name="camera_depth_optical_joint" type="fixed">
-	  <origin xyz="0 0 0" rpy="0 0 0" />
+	  <origin xyz="0 0 0" rpy="-1.5707 0 -1.5707" />
 	  <parent link="camera_depth_frame" />
 	  <child link="camera_depth_optical_frame" />
 	</joint>
