@@ -15,6 +15,6 @@ Optimizer/Slam2D: "true"
 
 Reg/Force3DoF: "true"
 Vis/MinInliers: "12"
-
+Grid/FromDepth: "false"
 
 

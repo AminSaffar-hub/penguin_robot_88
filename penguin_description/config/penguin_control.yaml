@@ -4,8 +4,8 @@ penguin:
     left_wheel: 'LW_base_joint'
     right_wheel: 'RW_base_joint'
     publish_rate: 50.0               # default: 50
-    pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
-    twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+    pose_covariance_diagonal : [0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
     
 
     # Wheel separation and diameter. These are both optional.
