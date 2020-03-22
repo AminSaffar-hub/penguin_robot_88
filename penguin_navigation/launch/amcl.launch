@@ -6,7 +6,7 @@
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" /-->
 
   <node pkg="amcl" type="amcl" name="amcl">
-    <rosparam file="$(find penguin_navigation)/config /amcl_param.yaml"/>
+    <rosparam file="$(find penguin_navigation)/config/amcl_param.yaml"/>
     <remap from="scan" to="$(arg scan_topic)"/>
   </node>
 </launch>
