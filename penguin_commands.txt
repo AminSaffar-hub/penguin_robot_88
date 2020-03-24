@@ -1,0 +1,14 @@
+to run simulation : 
+
+roslaunch penguin_description spawn_with_controllers.launch
+
+to run navigation : 
+
+roslaunch penguin_navigation move_base_demo.launch 
+
+to run rtab(needs navigation to work) : 
+
+roslaunch penguin_rtab rtab.launch
+
+
+
