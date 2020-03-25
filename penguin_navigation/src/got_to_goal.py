@@ -22,7 +22,7 @@ def move_to_goal(xGoal , yGoal , orientation):
         rospy.loginfo("still waiting")
     goal = MoveBaseGoal()
 
-    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.frame_id = "odom"
     goal.target_pose.header.stamp = rospy.Time.now()
 
     quaternion = tf.transformations.quaternion_from_euler(0,0,orientation)
@@ -63,18 +63,3 @@ def node():
 
 if __name__ =='__main__' :
     node()
-    #x_goal = 2
-    #y_goal = 2
-    #move_to_goal(x_goal,y_goal,0)
-    #x_goal = 0
-    #y_goal = 2
-    #move_to_goal(x_goal,y_goal,0)
-    #x_goal = 0
-    #y_goal = 0
-    #move_to_goal(x_goal,y_goal,3.14)
-    #rospy.spin()
-
-
-
-
-
