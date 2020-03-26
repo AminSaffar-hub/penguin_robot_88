@@ -14,4 +14,8 @@ def remote_control_reciever():
     rospy.spin()
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     remote_control_reciever()
+=======
+    remote_control_reciever()
+>>>>>>> abdessalem
