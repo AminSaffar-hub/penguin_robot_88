@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<robot name="mira">
+
+    <material name="blue">
+        <color rgba="0 0 0.8 1"/>
+    </material>
+    <material name="red">
+        <color rgba="0.8 0 0 1"/>
+    </material>
+    <material name="green">
+        <color rgba="0 0.8 0 1"/>
+    </material>
+    <material name="grey">
+        <color rgba="0.75 0.75 0.75 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1.0 1.0 1.0 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+	<!-- * * * Link Definitions * * * -->
+    <link name="baseAxeR_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0.0785 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/baseAxe.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <link name="AxeL_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 -0.0785 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/baseAxe.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="symetric_axe_joint" type="fixed">
+    	<parent link="baseAxeR_link"/>
+    	<child link="AxeL_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+	</joint>
+
+    <link name="wall_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.022"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/wallsystem.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="wall_joint" type="prismatic">
+    	<parent link="AxeL_link"/>
+    	<child link="wall_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit effort="0.1" velocity="0.01" lower="-0.1" upper="0.1"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+    <link name="roll_bras1_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.0001" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="fix_roll_bras1_joint" type="fixed">
+    	<parent link="wall_link"/>
+    	<child link="roll_bras1_link"/>
+        <origin xyz="0.15675 0.0462 -0.0092" rpy="0 0 0"/>
+	</joint>
+
+    <link name="roll_bras2_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.0001" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="fix_roll_bras2_joint" type="fixed">
+    	<parent link="wall_link"/>
+    	<child link="roll_bras2_link"/>
+        <origin xyz="0.15675 -0.0462 -0.0092" rpy="0 0 0"/>
+	</joint>
+
+    <link name="bras1_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/barsservo.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="bras1_joint" type="revolute">
+    	<parent link="roll_bras1_link"/>
+    	<child link="bras1_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit lower="0.0" upper="1.5709" effort="0.1" velocity="0.01"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+    <link name="bras2_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/barsservo.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="bras2_joint" type="revolute">
+    	<parent link="roll_bras2_link"/>
+    	<child link="bras2_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit lower="-1.5709" upper="0.0" effort="0.1" velocity="0.01"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+     <link name="roll_bras3_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.0001" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="fix_roll_bras3_joint" type="fixed">
+    	<parent link="wall_link"/>
+    	<child link="roll_bras3_link"/>
+        <origin xyz="-0.15675 0.0462 -0.0092" rpy="0 0 0"/>
+	</joint>
+
+    <link name="roll_bras4_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.0001" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+    <joint name="fix_roll_bras4_joint" type="fixed">
+    	<parent link="wall_link"/>
+    	<child link="roll_bras4_link"/>
+        <origin xyz="-0.15675 -0.0462 -0.0092" rpy="0 0 0"/>
+	</joint>
+
+    <link name="bras3_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/barsservo.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+
+    <joint name="bras3_joint" type="revolute">
+    	<parent link="roll_bras3_link"/>
+    	<child link="bras3_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit lower="0.0" upper="1.5709" effort="0.1" velocity="0.01"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+
+    <link name="bras4_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://my_egg_description/models/meshes/barsservo.dae" />
+            </geometry>
+            <material name="green"/>
+        </visual>
+	</link>
+
+
+
+    <joint name="bras4_joint" type="revolute">
+    	<parent link="roll_bras4_link"/>
+    	<child link="bras4_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit lower="-1.5709" upper="0.0" effort="0.1" velocity="0.01"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+</robot>
