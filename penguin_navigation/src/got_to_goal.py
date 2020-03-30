@@ -8,12 +8,11 @@ from actionlib_msgs.msg import *
 from geometry_msgs.msg import Point
 import tf
 
-from penguin_navigation.srv import  goal_srv
-from penguin_navigation.srv import  goal_srvRequest
-from penguin_navigation.srv import  goal_srvResponse
+from penguin_navigation.msg import XyTheta
 
 new_goal = Point()
 n_goal = False
+
 
 def move_to_goal(xGoal , yGoal , orientation):
     ac = actionlib.SimpleActionClient("move_base",MoveBaseAction)
@@ -44,17 +43,22 @@ def move_to_goal(xGoal , yGoal , orientation):
     else:
         rospy.loginfo("goal_failed")
         return False
-def goal_responce(req):
+
+def callback(req):
     global new_goal,n_goal
     new_goal.x = req.x
     new_goal.y = req.y
     new_goal.z = req.theta
     n_goal = True
-    return goal_srvResponse()
+    rospy.loginfo("  x= %f , y= %f , theta = %f " % (req.x, req.y,req.theta))
+
+    
 def node():
     global n_goal
-    rospy.init_node('map_navigation',anonymous=False) 
-    rospy.Service('autonomous_navigation', goal_srv, goal_responce) 
+    rospy.init_node('AutonomousNavigation', anonymous=True)
+    rospy.Subscriber("/odomCommand", XyTheta, callback)
+    #rospy.spin()
+     
     while not(rospy.is_shutdown()):
         if( n_goal ):
             n_goal = False
