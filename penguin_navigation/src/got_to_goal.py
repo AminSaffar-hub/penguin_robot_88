@@ -11,6 +11,10 @@ import tf
 from penguin_navigation.msg import XyTheta
 
 new_goal = Point()
+goal_prec = Point()
+goal_prec.x =0
+goal_prec.y =0
+goal_prec.z =0
 n_goal = False
 
 
@@ -45,19 +49,23 @@ def move_to_goal(xGoal , yGoal , orientation):
         return False
 
 def callback(req):
-    global new_goal,n_goal
-    new_goal.x = req.x
-    new_goal.y = req.y
-    new_goal.z = req.theta
-    n_goal = True
-    rospy.loginfo("  x= %f , y= %f , theta = %f " % (req.x, req.y,req.theta))
+    global new_goal,n_goal,goal_prec
+    if(goal_prec.x != req.x) or (goal_prec.y != req.y) or (goal_prec.z != req.theta):
+        new_goal.x = req.x
+        new_goal.y = req.y
+        new_goal.z = req.theta
+        goal_prec.x =req.x
+        goal_prec.y =req.y
+        goal_prec.z =req.theta
+        rospy.loginfo("  x= %f , y= %f , theta = %f " % (req.x, req.y,req.theta))
+        n_goal = True
+    
 
     
 def node():
     global n_goal
     rospy.init_node('AutonomousNavigation', anonymous=True)
     rospy.Subscriber("/odomCommand", XyTheta, callback)
-    #rospy.spin()
      
     while not(rospy.is_shutdown()):
         if( n_goal ):

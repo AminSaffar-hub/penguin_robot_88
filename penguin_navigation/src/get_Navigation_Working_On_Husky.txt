@@ -1,3 +1,3 @@
 1/roslaunch husky_gazebo husky_playpen.launch
-2/roslaunch husky_navigation move_base_demo.launch
-3/rosservice call /autonomous_navigation
+2/roslaunch husky_navigation move_base_mapless_demo.launch
+
