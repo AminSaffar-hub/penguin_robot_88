@@ -158,6 +158,10 @@ int checkStop(void);
 int CompareString(uint8_t*,char*,int);
 void DataConverting(uint8_t*);
 void ExtractInfo(uint8_t* ,int );
+
+float EulerDistance(float ,float );
+void gotoXY3(float ,float);
+
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		{
 			if (htim->Instance==TIM7) //check if the interrupt comes from TIM7
@@ -224,6 +228,7 @@ int main(void)
 	 //gotoXY2(900,500,0.0);
 	// HAL_Delay(1000);
 	// gotoXY2(0,0,0.0);
+	 gotoXY3(700,700);
 	 //Move(1000,2000,2000);
 	 //RunForward(1500,1500);
 	// HAL_Delay(2000);
@@ -253,8 +258,8 @@ int main(void)
 		HAL_Delay(100);
 		result =  0;
 		}*/
-
-		HAL_UART_Receive(&huart2,(uint8_t*)dataIn,20,100);
+ // receive velocity from raspberry Workin 100%
+		/*HAL_UART_Receive(&huart2,(uint8_t*)dataIn,20,100);
 		ExtractInfo(dataIn,20);
 		Tab = atof(ExtInfo1);
 	    Tab2 = atof(ExtInfo2);
@@ -264,7 +269,44 @@ int main(void)
 				HAL_GPIO_TogglePin(GPIOA,GPIO_PIN_5);
 				HAL_Delay(100);
 				//for (int i = 0 ; i<30;i++) dataIn[i] = 0;
-				}
+				}*/
+ // Manuel Mode :
+	  HAL_UART_Receive(&huart2,(uint8_t*)dataIn,20,100);
+	  char a = (char)dataIn[0];
+
+	  switch (a)
+	  {
+	  case 'z' :  {
+		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+		  RunToGoal(1500,1500);
+		  break ;
+	  }
+	  case 'l' :  {
+	  		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+	  		RunToGoal(-1500,1500);
+	  		  break ;
+	  	  }
+	  case 'r' :  {
+	  		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+	  		RunToGoal(1500,-1500);
+	  		  break ;
+	  	  }
+	  case 'd' :  {
+	  		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,0);
+	  		RunToGoal(-1500,-1500);
+	  		  break ;
+	  	  }
+	  case 's' :  {
+	  		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
+	  		stopp();
+	  		  break ;
+	  	  }
+	  default :{
+  		  HAL_GPIO_WritePin(GPIOA,GPIO_PIN_5,1);
+  		stopp();
+  		  break ;
+  	  }
+	  }
 		//HAL_UART_Transmit(&huart2,data,20,1000);
 
 
@@ -911,7 +953,48 @@ void gotoXY2(float XGoal,float YGoal,float angle )
 	stopp();
 }
 
+float EulerDistance(float a,float b)
+{
+	return(sqrtf(  pow(X-a,2)  +  pow(Y-b,2)  )  );
+}
 
+void gotoXY3(float Xg,float Yg)
+{
+	float DistanceToGoal = EulerDistance(Xg,Yg) ;
+	float OrientatioToGoal ;
+	float LineairVelocity ;
+	float AngularVelocity;
+
+	float Velocity_right;
+	float Velocity_left ;
+	float erreur_orientation = 0.0 ;
+
+	float Kv  = 1.5 ;
+	float Kh  = 2 ;
+	float K_intergral = 0.000009;
+
+	while ((fabs(Yg-Y)>5)||(fabs(Xg-X)>5))
+	{
+		LineairVelocity = Kv * DistanceToGoal * 0.001 ; // 0.001 to convert mm to meter
+		OrientatioToGoal = atan2(Yg - Y,Xg - X);
+		erreur_orientation += (OrientatioToGoal - PHI) ;
+		AngularVelocity = Kh * (OrientatioToGoal - PHI) + K_intergral * erreur_orientation;
+
+		Velocity_right  = (2 * LineairVelocity + AngularVelocity * entraxe) / (2 * RayonR) ;
+		Velocity_left   = (2 * LineairVelocity - AngularVelocity * entraxe) / (2 * RayonL) ;
+
+		if (Velocity_right>1.5)  Velocity_right = 1.5;
+		if (Velocity_left>1.5)  Velocity_left = 1.5;
+		if (Velocity_right<0.0)  Velocity_right = 0.0;
+		if (Velocity_left<0.0)  Velocity_left = 0.0;
+
+		VelocityAsserv2(Velocity_right,Velocity_left);
+		DistanceToGoal = EulerDistance(Xg,Yg) ;
+	}
+
+	stopp();
+
+}
 void Move(int Distance,int VR,int VL)
 {
 	int a ;
