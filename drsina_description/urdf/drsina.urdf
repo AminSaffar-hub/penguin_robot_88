@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+<robot name="DrSina">
+
+
+
+    <link name="base_link">
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/chassis.dae"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        <collision>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/chassis.dae"/>
+            </geometry>
+        </collision>
+	</link>
+<!--wheels-->
+    <link name="Rwheel_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+            </geometry>   
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="Lwheel_link">
+
+        <visual>
+            <origin rpy="0 0 3.141592" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 3.141592" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointR" type="continuous">
+    	<parent link="base_link"/>
+    	<child link="Rwheel_link"/>
+        <origin xyz="-0.0019 -0.235 -0.0239" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <joint name="roll_jointL" type="continuous">
+    	<parent link="base_link"/>
+    	<child link="Lwheel_link"/>
+        <origin xyz="-0.0019 0.235 -0.0239" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+
+
+
+<!-- castle Wheel right Backward-->
+    <link name="RBcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastleRB" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="RBcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+    <link name="middlecastlewheelRB_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointmiddlecastleRB" type="continuous">
+    	<parent link="RBcastlewheel_link"/>
+    	<child link="middlecastlewheelRB_link"/>
+        <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelRBlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastlewheelRB" type="continuous">
+    	<parent link="middlecastlewheelRB_link"/>
+    	<child link="castlewheel_wheelRBlink"/>
+        <!-- <origin rpy="0 0 1.570796" xyz="-0.2890 -0.2065 -0.048"/> -->
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+<!--  -->
+
+
+<!-- castle Wheel right Forward-->
+    <link name="RFcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastleRF" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="RFcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+
+    <link name="middlecastlewheelRF_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </collision>
+    </link>
+
+    <joint name="roll_jointmiddlecastleRF" type="continuous">
+    	<parent link="RFcastlewheel_link"/>
+    	<child link="middlecastlewheelRF_link"/>
+        <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelRFlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastlewheelRF" type="continuous">
+    	<parent link="middlecastlewheelRF_link"/>
+    	<child link="castlewheel_wheelRFlink"/>
+        <!-- <origin rpy="0 0 1.570796" xyz="0.2240 -0.2065 -0.048"/> -->
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
+
+
+<!-- castle Wheel Left Forward-->
+    <link name="LFcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastleLF" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="LFcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+    <link name="middlecastlewheelLF_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointmiddlecastleLF" type="continuous">
+    	<parent link="LFcastlewheel_link"/>
+    	<child link="middlecastlewheelLF_link"/>
+        <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelLFlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastlewheelLF" type="continuous">
+    	<parent link="middlecastlewheelLF_link"/>
+    	<child link="castlewheel_wheelLFlink"/>
+        <origin  xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
+    
+
+<!-- castle Wheel Left Backward-->
+    <link name="LBcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastleLB" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="LBcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+ 
+    <link name="middlecastlewheelLB_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/middlecastkewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointmiddlecastleLB" type="continuous">
+    	<parent link="LBcastlewheel_link"/>
+    	<child link="middlecastlewheelLB_link"/>
+        <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelLBlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+        <collision>
+             <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="roll_jointcastlewheelLB" type="continuous">
+    	<parent link="middlecastlewheelLB_link"/>
+    	<child link="castlewheel_wheelLBlink"/>
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
+   
+
+
+</robot>
