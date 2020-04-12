@@ -64,8 +64,68 @@ Visualization Manager:
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
+        LBcastlewheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        LFcastlewheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         Link Tree Style: Links in Alphabetic Order
+        Lwheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RBcastlewheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        RFcastlewheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        Rwheel_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         bottle:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        castlewheel_wheelLBlink:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        castlewheel_wheelLFlink:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        castlewheel_wheelRBlink:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        castlewheel_wheelRFlink:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        emergencyButton_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -81,6 +141,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         gjouraR:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        greenButton_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -101,6 +166,31 @@ Visualization Manager:
           Show Trail: false
           Value: true
         liaison:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        lidar_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middlecastlewheelLB_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middlecastlewheelLF_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middlecastlewheelRB_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        middlecastlewheelRF_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -126,6 +216,21 @@ Visualization Manager:
           Show Trail: false
           Value: true
         porteR:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        redButton_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        redligthL_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        redligthR_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -165,6 +270,16 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        yellowligthL_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        yellowligthR_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -189,7 +304,7 @@ Visualization Manager:
   Global Options:
     Background Color: 48; 48; 48
     Default Light: true
-    Fixed Frame: fix
+    Fixed Frame: base_link
     Frame Rate: 30
   Name: root
   Tools:
@@ -210,25 +325,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.47165418
+      Distance: 2.73842025
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.441749215
-        Y: 0.184094369
-        Z: 0.848878264
+        X: -0.089656651
+        Y: -0.113684222
+        Z: 0.553120494
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.300203085
+      Pitch: 0.274796933
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.6985631
+      Yaw: 1.09854209
     Saved:
       - Class: rviz/Orbit
         Distance: 3.59634542

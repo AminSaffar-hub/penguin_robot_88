@@ -24,8 +24,441 @@
     <material name="blue">
         <color rgba="0.0 0.0  255.0 1.0" />
     </material>
+
+    <link name="base_link">
+
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/chassis.dae"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+	</link>
+
+    <link name="Rwheel_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/robotwheel.dae" />
+            </geometry>
+           
+        </visual>
+    </link>
+
+    <link name="Lwheel_link">
+
+        <visual>
+            <origin rpy="0 0 3.141592" xyz="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/robotwheel.dae" />
+            </geometry>
+            
+        </visual>
+    </link>
+
+    <joint name="roll_jointR" type="continuous">
+    	<parent link="base_link"/>
+    	<child link="Rwheel_link"/>
+        <origin xyz="-0.0019 -0.235 -0.0239" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+    <joint name="roll_jointL" type="continuous">
+    	<parent link="base_link"/>
+    	<child link="Lwheel_link"/>
+        <origin xyz="-0.0019 0.235 -0.0239" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 1 0"/>
+	</joint>
+
+
+<!-- castle Wheel right Backward-->
+    <link name="RBcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastleRB" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="RBcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+    <link name="middlecastlewheelRB_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <!-- <origin rpy="0 0 1.570796" xyz="0 0 0"/> -->
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointmiddlecastleRB" type="continuous">
+    	<parent link="RBcastlewheel_link"/>
+    	<child link="middlecastlewheelRB_link"/>
+        <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelRBlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastlewheelRB" type="continuous">
+    	<parent link="middlecastlewheelRB_link"/>
+    	<child link="castlewheel_wheelRBlink"/>
+        <!-- <origin rpy="0 0 1.570796" xyz="-0.2890 -0.2065 -0.048"/> -->
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+
+<!--  -->
+
+
+<!-- castle Wheel right Forward-->
+    <link name="RFcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastleRF" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="RFcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+
+    <link name="middlecastlewheelRF_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointmiddlecastleRF" type="continuous">
+    	<parent link="RFcastlewheel_link"/>
+    	<child link="middlecastlewheelRF_link"/>
+        <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelRFlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastlewheelRF" type="continuous">
+    	<parent link="middlecastlewheelRF_link"/>
+    	<child link="castlewheel_wheelRFlink"/>
+        <!-- <origin rpy="0 0 1.570796" xyz="0.2240 -0.2065 -0.048"/> -->
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
+
+
+<!-- castle Wheel Left Forward-->
+    <link name="LFcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastleLF" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="LFcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+
+    <link name="middlecastlewheelLF_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointmiddlecastleLF" type="continuous">
+    	<parent link="LFcastlewheel_link"/>
+    	<child link="middlecastlewheelLF_link"/>
+        <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelLFlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/castlewheel.dae" />
+            </geometry>
+
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastlewheelLF" type="continuous">
+    	<parent link="middlecastlewheelLF_link"/>
+    	<child link="castlewheel_wheelLFlink"/>
+        <origin  xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
     
-  <link name="fix">
+
+<!-- castle Wheel Left Backward-->
+    <link name="LBcastlewheel_link">
+
+        <visual>
+            <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/topcastlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastleLB" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="LBcastlewheel_link"/>
+        <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+	</joint>
+ 
+    <link name="middlecastlewheelLB_link">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/middlecastkewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointmiddlecastleLB" type="continuous">
+    	<parent link="LBcastlewheel_link"/>
+    	<child link="middlecastlewheelLB_link"/>
+        <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <link name="castlewheel_wheelLBlink">
+
+        <visual>
+            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/castlewheel.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="roll_jointcastlewheelLB" type="continuous">
+    	<parent link="middlecastlewheelLB_link"/>
+    	<child link="castlewheel_wheelLBlink"/>
+        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <axis xyz="1 0 0"/>
+	</joint>
+<!--  -->
+
+<!-- Light indicator -->
+
+    <link name="emergencyButton_link">
+
+        <visual>
+            <origin rpy="0 -1.570796 0" xyz="-0.360 0 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/emergencyButton.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="emergencyButton_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="emergencyButton_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+	</joint>
+
+
+    <link name="yellowligthR_link">
+
+        <visual>
+            <origin rpy="0 -1.570796 0" xyz="-0.365 0.158 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/lightback.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="yellowligthR_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="yellowligthR_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+
+    <link name="yellowligthL_link">
+
+        <visual>
+            <origin rpy="0 -1.570796 0" xyz="-0.365 -0.158 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/lightback.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="yellowligthL_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="yellowligthL_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+
+
+    <link name="redligthR_link">
+
+        <visual>
+            <origin rpy="0 -1.570796 0" xyz="-0.365 0.095 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/lightbackRed.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="redligthR_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="redligthR_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+
+    <link name="redligthL_link">
+
+        <visual>
+            <origin rpy="0 -1.570796 0" xyz="-0.365 -0.095 0"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/lightbackRed.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="redligthL_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="redligthL_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+
+<!--  -->
+
+<!-- green button -->
+    <link name="greenButton_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0.298 0.1001 0.075"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/buttongreen.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="greenButton_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="greenButton_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+<!--  -->
+
+<!-- red Button -->
+    <link name="redButton_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0.298 -0.1001 0.075"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/buttonred.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="redButton_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="redButton_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+<!--  -->
+
+<!-- lidar  -->
+    <link name="lidar_link">
+
+        <visual>
+            <origin rpy="0 0 0" xyz="0.303 -0.006 0.1"/>
+            <geometry>
+                <mesh filename="package://hospital_robot/meshes/lidar.dae" />
+            </geometry>
+        
+        </visual>
+    </link>
+
+    <joint name="lidar_joint" type="fixed">
+    	<parent link="base_link"/>
+    	<child link="lidar_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+<!--  -->
+<!-- base armoire link  -->
+    <link name="fix">
      <pose>0 0 0 0 0 0</pose>
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0" />
@@ -40,14 +473,14 @@
             </inertial>
 
         <collision>
-            <origin xyz="0 0 0.3" rpy="1.57 0 0" />
+            <origin xyz="0 0 0" rpy="1.57 0 0" />
             <geometry>
                 <mesh filename="package://hospital_robot/meshes/fix.stl" />
             </geometry>
         </collision>
 
         <visual>
-            <origin xyz="0 0 0.3" rpy="1.57 0 0" />
+            <origin xyz="0 0 0" rpy="1.57 0 0" />
             <geometry>
                 <mesh
                 filename="package://hospital_robot/meshes/fix.stl" />
@@ -55,6 +488,14 @@
             <material name="silver"/>
         </visual>
     </link>
+
+    <joint name="principle_joint" type="fixed">
+        <origin xyz="-0.3 0 0.19" rpy="0 0 0" />
+    	<parent link="base_link"/>
+    	<child link="fix"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>  
+	</joint>
+<!--  -->
 
     <link name="lampe">
      <pose>0 0 0 0 0 0</pose>
@@ -88,7 +529,7 @@
     </link>
 
   <joint name="lampe_joint" type="fixed">
-    <origin xyz="0.2 -0.05 1.31" rpy="0 0 0" />
+    <origin xyz="0.2 -0.05 1.01" rpy="0 0 0" />
     <parent link="fix" />
     <child link="lampe" />
     <axis xyz="0 0 0" />
@@ -116,7 +557,7 @@
     </link>
 
     <joint name="sep1_joint" type="fixed">
-    <origin xyz="0.345 0.21 0.31" rpy="0 0 0" />
+    <origin xyz="0.345 0.21 0.01" rpy="0 0 0" />
     <parent link="fix" />
     <child link="sep1" />
     <axis xyz="0 0 0" />
@@ -143,7 +584,7 @@
     </link>
 
     <joint name="sep2_joint" type="fixed">
-    <origin xyz="0.25 0.15 0.31" rpy="0 0 0" />
+    <origin xyz="0.25 0.15 0.01" rpy="0 0 0" />
     <parent link="fix" />
     <child link="sep2" />
     <axis xyz="0 0 0" />
@@ -170,7 +611,7 @@
     </link>
 
     <joint name="sep1.2_joint" type="fixed">
-    <origin xyz="0.07 -0.21 0.31" rpy="0 0 0" />
+    <origin xyz="0.07 -0.21 0.01" rpy="0 0 0" />
     <parent link="fix" />
     <child link="sep1.2" />
     <axis xyz="0 0 0" />
@@ -197,7 +638,7 @@
     </link>
 
     <joint name="sep2.2_joint" type="fixed">
-    <origin xyz="0.255 -0.28 0.31" rpy="0 0 0" />
+    <origin xyz="0.255 -0.28 0.01" rpy="0 0 0" />
     <parent link="fix" />
     <child link="sep2.2" />
     <axis xyz="0 0 0" />
@@ -281,7 +722,7 @@
     </link>
 
     <joint name="kjar_joint" type="prismatic">
-    <origin xyz=" 0.51 -0.15 1.23" rpy="0 0 0" />
+    <origin xyz=" 0.51 -0.15 0.93" rpy="0 0 0" />
     <parent link="fix" />
     <child link="kjarL" />
     <axis xyz="0 1 0" />
@@ -309,7 +750,7 @@
     </link>
 
     <joint name="kjarR_joint" type="prismatic">
-    <origin xyz=" 0.40 -0.24 1.23" rpy="0 0 0" />
+    <origin xyz=" 0.40 -0.24 0.93" rpy="0 0 0" />
     <parent link="fix" />
     <child link="kjarR" />
     <axis xyz="0 1 0" />
@@ -391,7 +832,7 @@
     </link>
 
     <joint name="porteL_joint" type="fixed">
-    <origin xyz="0.395 0.305 0.31 " rpy="0 0 0" />
+    <origin xyz="0.395 0.305 0.01 " rpy="0 0 0" />
     <parent link="fix" />
     <child link="porteL" />
     <axis xyz="0 0 0" />
@@ -418,7 +859,7 @@
     </link>
 
     <joint name="porteR_joint" type="fixed">
-    <origin xyz="0.395 -0.305 0.31 " rpy="0 0 0" />
+    <origin xyz="0.395 -0.305 0.01 " rpy="0 0 0" />
     <parent link="fix" />
     <child link="porteR" />
     <axis xyz="0 0 0" />
@@ -445,7 +886,7 @@
     </link>
 
     <joint name="yedL_joint" type="fixed">
-    <origin xyz="0.35 0.31 0.93  " rpy="0 0 0" />
+    <origin xyz="0.35 0.31 0.63  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="yedL" />
     <axis xyz="0 0 0" />
@@ -472,7 +913,7 @@
     </link>
 
     <joint name="yedR_joint" type="fixed">
-    <origin xyz="0.36 -0.31 0.93  " rpy="0 0 0" />
+    <origin xyz="0.36 -0.31 0.63  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="yedR" />
     <axis xyz="0 0 0" />
@@ -499,7 +940,7 @@
     </link>
 
     <joint name="yedF_joint" type="fixed">
-    <origin xyz="0.615 0.01 0.93  " rpy="0 0 0" />
+    <origin xyz="0.615 0.01 0.63  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="yedF" />
     <axis xyz="0 0 0" />
@@ -526,7 +967,7 @@
     </link>
 
     <joint name="kjouraL_joint" type="fixed">
-    <origin xyz="0.50 0.04 0.44  " rpy="0 0 0" />
+    <origin xyz="0.50 0.04 0.14  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="gjouraL" />
     <axis xyz="0 0 0" />
@@ -553,7 +994,7 @@
     </link>
 
     <joint name="kjouraR_joint" type="fixed">
-    <origin xyz="0.40 -0.04 0.44  " rpy="0 0 0" />
+    <origin xyz="0.40 -0.04 0.14  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="gjouraR" />
     <axis xyz="0 0 0" />
@@ -580,7 +1021,7 @@
     </link>
 
     <joint name="liaison_joint" type="fixed">
-    <origin xyz="-0.05 0.3 0.187  " rpy="0 0 0" />
+    <origin xyz="-0.05 0.3 -0.113  " rpy="0 0 0" />
     <parent link="fix" />
     <child link="liaison" />
     <axis xyz="0 0 0" />
