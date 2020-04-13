@@ -2,3 +2,8 @@ drsina:
   joint_state_controller:
     type: "joint_state_controller/JointStateController"
     publish_rate: 50
+    dependent_joints:
+      roll_jointcastlewheelRB: {parent: roll_jointR}
+      roll_jointcastlewheelRF: {parent: roll_jointR}
+      roll_jointcastlewheelLB: {parent: roll_jointL}
+      roll_jointcastlewheelLF: {parent: roll_jointL}
