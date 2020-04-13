@@ -3,13 +3,15 @@
         <arg name="x" default="0.0"/>
         <arg name="y" default="0.0"/>
         <arg name="z" default="0.0"/>
-        
-        
+
+
 
         <arg name="urdf_robot_file" default=""/>
-        <arg name="robot_name" default=""/>
+        <arg name="robot_name" default="drsina"/>
 
         <param name="robot_description" command="cat $(arg urdf_robot_file)"/>
 
-        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"  respawn="false" output="screen" args="-urdf -x $(arg x) -y $(arg y) -z $(arg z)  -model $(arg robot_name) -param robot_description"/>
+        <!-- <node name="gazebo" pkg="gazebo_ros" type="gazebo"/> -->
+        <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"  respawn="false" output="screen"
+        args="-urdf -x $(arg x) -y $(arg y) -z $(arg z)  -model $(arg robot_name) -param robot_description"/>
     </launch>
