@@ -721,7 +721,7 @@
         
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0.303 -0.006 0.1"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <mesh filename="package://drsina_description/models/meshes/lidar.dae" />
             </geometry>
