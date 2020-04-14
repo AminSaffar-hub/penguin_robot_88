@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <robot name="DrSina">
 
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/drsina</robotNamespace>
+            <legacyModeNS>true</legacyModeNS>
+        </plugin>
+    </gazebo>
     <material name="yellow">
                 <color rgba="1.0 1.0 0 1.0"/>
     </material>
@@ -34,6 +40,12 @@
         </inertial>
         
 	</link>
+    <link name="base_footprint"/>
+    <joint name="base_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+    </joint>
 
     
 
@@ -290,7 +302,7 @@
     	<parent link="middlecastlewheelRF_link"/>
     	<child link="castlewheel_wheelRFlink"/>
         <!-- <origin rpy="0 0 1.570796" xyz="0.2240 -0.2065 -0.048"/> -->
-        <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <origin xyz="0 0.03239 -0.076" rpy="0 0 0"/>
         <limit effort="1000" velocity="1"/>
         <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
@@ -386,7 +398,7 @@
     <joint name="roll_jointcastlewheelLF" type="continuous">
     	<parent link="middlecastlewheelLF_link"/>
     	<child link="castlewheel_wheelLFlink"/>
-        <origin  xyz="0 0.03239 -0.075" rpy="0 0 0"/>
+        <origin  xyz="0 0.03239 -0.076" rpy="0 0 0"/>
         <limit effort="1000" velocity="1"/>
         <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
@@ -880,30 +892,30 @@
 	    <kd>1.0</kd>
 	  </gazebo>
 	  
-	  <gazebo reference="roll_jointcastlewheelRF">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
-	    <kp>1.0</kp>
+	  <gazebo reference="castlewheel_wheelRBlink">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
+	    <kp>1000000.0</kp>
 	    <kd>1.0</kd>
 	  </gazebo>
 	  
-	  <gazebo reference="roll_jointcastlewheelLF">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
-	    <kp>1.0</kp>
+	  <gazebo reference="castlewheel_wheelLBlink">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
+	    <kp>1000000.0</kp>
 	    <kd>1.0</kd>
 	  </gazebo>
-      <gazebo reference="roll_jointcastlewheelRB">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
-	    <kp>1.0</kp>
+      <gazebo reference="castlewheel_wheelRFlink">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
+	    <kp>1000000.0</kp>
 	    <kd>1.0</kd>
 	  </gazebo>
 	  
-	  <gazebo reference="roll_jointcastlewheelLB">
-	    <mu1>1.0</mu1>
-	    <mu2>1.0</mu2>
-	    <kp>1.0</kp>
+	  <gazebo reference="castlewheel_wheelLFlink">
+	    <mu1>20000000000.0</mu1>
+	    <mu2>20000000000.0</mu2>
+	    <kp>1000000.0</kp>
 	    <kd>1.0</kd>
 	  </gazebo>
 
@@ -935,7 +947,7 @@
 <gazebo reference="lidar_link">
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
@@ -967,7 +979,7 @@
 <gazebo reference="ultrasonic_sensor_right1">
     <sensor type="ray" name="sensor_ultrasonic">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
@@ -1000,7 +1012,7 @@
 <gazebo reference="ultrasonic_sensor_left1">
     <sensor type="ray" name="sensor_ultrasonic_left">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
@@ -1032,7 +1044,7 @@
 <gazebo reference="ultrasonic_sensor_back1">
     <sensor type="ray" name="sensor_ultrasonic_back">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>
         <scan>
@@ -1078,6 +1090,108 @@
     <robotBaseFrame>base_footprint</robotBaseFrame>
   </plugin>
 </gazebo>
+
+<!--gazebo transmissions-->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointR">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointL">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointmiddlecastleRF">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointcastlewheelRF">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran5">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointmiddlecastleLF">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor5">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran6">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointcastlewheelLF">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor6">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran7">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointmiddlecastleLB">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor7">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran8">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointcastlewheelLB">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor8">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+   <transmission name="tran9">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointmiddlecastleRB">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor9">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <transmission name="tran10">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="roll_jointcastlewheelRB">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor10">
+      <hardwareInterface>EffortJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
 
 
 </robot>

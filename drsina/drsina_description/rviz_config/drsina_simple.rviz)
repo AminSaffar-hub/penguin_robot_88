@@ -27,7 +27,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Toolbars:
   toolButtonStyle: 2
 Visualization Manager:
@@ -91,10 +91,6 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        base_footprint:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         base_link:
           Alpha: 1
           Show Axes: false
@@ -116,6 +112,11 @@ Visualization Manager:
           Show Trail: false
           Value: true
         castlewheel_wheelRFlink:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        emergencyButton2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -346,25 +347,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.21894169
+      Distance: 1.03866124
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.180336356
-        Y: -0.631356478
-        Z: 1.1540699
+        X: -0.381070375
+        Y: -0.794770002
+        Z: 0.795905948
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.47520259
+      Pitch: 0.550202549
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.49539471
+      Yaw: 4.11538124
     Saved: ~
 Window Geometry:
   Displays:

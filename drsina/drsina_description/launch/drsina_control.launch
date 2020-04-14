@@ -2,10 +2,10 @@
 <launch>
     <rosparam file="$(find drsina_description)/config/drsina_control.yaml" command="load"/>
     <rosparam file="$(find drsina_description)/config/joint_states.yaml" command="load"/>
-    <!--rosparam file="$(find drsina_description)/config/gazebo_ros_param.yaml" command="load"/-->
+    
     <!--load the controllers-->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-    output="screen" ns="/drsina" args="move_base_controller joint_state_controller "/>
+    output="screen" ns="/drsina" args="joint_state_controller"/>
     <!--convert joint states to TF transforms for rviz ,etc-->
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
         <param name="publish_frequency" type="double" value="30.0"/>
