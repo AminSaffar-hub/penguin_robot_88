@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <robot name="DrSina">
 
-
     <material name="yellow">
                 <color rgba="1.0 1.0 0 1.0"/>
     </material>
@@ -10,17 +9,8 @@
                 <color rgba="0.0 1.0 0 1.0"/>
     </material>
 
-
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <robotNamespace>/drsina</robotNamespace>
-                <!--robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType-->
-                <legacyModeNS>true</legacyModeNS>
-        </plugin>
-    </gazebo>
-
 <!--base and wheels-->
-    <link name ="base_footprint"/>
+    
     <link name="base_link">
 
         <visual>
@@ -33,7 +23,7 @@
         <collision>
              <origin rpy="0.0 0 0" xyz="0 0 0"/>
             <geometry>
-                <box size="0.750 0.750 0.180"/>
+                <box size="0.750  0.750 0.180"/>
             </geometry>
             <material name="grey"/>
         </collision>
@@ -45,11 +35,7 @@
         
 	</link>
 
-    <joint name="joint_name" type="fixed">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <parent link="base_footprint"/>
-        <child link="base_link"/>
-    </joint>
+    
 
     <link name="Rwheel_link">
         <visual>
@@ -60,9 +46,9 @@
            
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0.0 0.0 0.0"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0.0 0.0 0.0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+                <cylinder radius="0.075" length="0.03"/>
             </geometry>
         </collision>
         <inertial>
@@ -83,9 +69,9 @@
             
         </visual>
         <collision>
-            <origin rpy="0 0 3.141592" xyz="0 0 0"/>
+            <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/robotwheel.dae" />
+                <cylinder radius="0.075" length="0.03"/>
             </geometry>
         </collision>
         <inertial>
@@ -99,16 +85,16 @@
     <joint name="roll_jointR" type="continuous">
     	<parent link="base_link"/>
     	<child link="Rwheel_link"/>
-        <origin xyz="-0.0019 -0.235 -0.0239" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <origin xyz="-0.0019 -0.235 -0.0238" rpy="0 0 0"/>
+        <limit effort="100" velocity="1"/>
         <axis xyz="0 1 0"/>
 	</joint>
 
     <joint name="roll_jointL" type="continuous">
     	<parent link="base_link"/>
     	<child link="Lwheel_link"/>
-        <origin xyz="-0.0019 0.235 -0.0239" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <origin xyz="-0.0019 0.235 -0.0238" rpy="0 0 0"/>
+        <limit effort="100" velocity="1"/>
         <axis xyz="0 1 0"/>
 	</joint>
 
@@ -126,7 +112,7 @@
         <collision>
             <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+                <box size="0.085 0.105 0.004"/>
             </geometry>
         </collision>
         <inertial>
@@ -172,7 +158,8 @@
     	<parent link="RBcastlewheel_link"/>
     	<child link="middlecastlewheelRB_link"/>
         <origin rpy="0 0 1.570796" xyz="-0.25761 -0.2065 0.027"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="0 0 1"/>
 	</joint>
 
@@ -186,9 +173,9 @@
         
         </visual>
         <collision>
-            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0 0.0" rpy="0 1.5707 0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+                <cylinder radius="0.05" length="0.035"/>
             </geometry>
         
         </collision>
@@ -205,7 +192,8 @@
     	<child link="castlewheel_wheelRBlink"/>
         <!-- <origin rpy="0 0 1.570796" xyz="-0.2890 -0.2065 -0.048"/> -->
         <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
 	</joint>
 
@@ -225,7 +213,7 @@
         <collision>
             <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+                <box size="0.085 0.105 0.004"/>
             </geometry>
         
         </collision>
@@ -271,7 +259,8 @@
     	<parent link="RFcastlewheel_link"/>
     	<child link="middlecastlewheelRF_link"/>
         <origin rpy="0 0 1.570796" xyz="0.25761 -0.2065 0.027"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="0 0 1"/>
 	</joint>
 
@@ -285,9 +274,9 @@
         
         </visual>
         <collision>
-            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0 0.0" rpy="0 1.5707 0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+                <cylinder radius="0.05" length="0.035"/>
             </geometry>
         </collision>
         <inertial>
@@ -302,7 +291,8 @@
     	<child link="castlewheel_wheelRFlink"/>
         <!-- <origin rpy="0 0 1.570796" xyz="0.2240 -0.2065 -0.048"/> -->
         <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
 	</joint>
 <!--  -->
@@ -321,7 +311,7 @@
         <collision>
             <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+                <box size="0.085 0.105 0.004"/>
             </geometry>
         
         </collision>
@@ -365,7 +355,8 @@
     	<parent link="LFcastlewheel_link"/>
     	<child link="middlecastlewheelLF_link"/>
         <origin rpy="0 0 1.570796" xyz="0.25761 0.2065 0.027"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="0 0 1"/>
 	</joint>
 
@@ -379,9 +370,9 @@
 
         </visual>
         <collision>
-            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0 0.0" rpy="0 1.5707 0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+                <cylinder radius="0.05" length="0.035"/>
             </geometry>
 
         </collision>
@@ -396,7 +387,8 @@
     	<parent link="middlecastlewheelLF_link"/>
     	<child link="castlewheel_wheelLFlink"/>
         <origin  xyz="0 0.03239 -0.075" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
 	</joint>
 <!--  -->
@@ -415,7 +407,7 @@
         <collision>
             <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/topcastlewheel.dae" />
+                <box size="0.085 0.105 0.004"/>
             </geometry>
         
         </collision>
@@ -460,7 +452,8 @@
     	<parent link="LBcastlewheel_link"/>
     	<child link="middlecastlewheelLB_link"/>
         <origin rpy="0 0 1.570796" xyz="-0.25761 0.2065 0.027"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="0 0 1"/>
 	</joint>
 
@@ -474,9 +467,9 @@
         
         </visual>
         <collision>
-            <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0 0.0" rpy="0 1.5707 0"/>
             <geometry>
-                <mesh filename="package://drsina_description/models/meshes/castlewheel.dae" />
+                <cylinder radius="0.05" length="0.035"/>
             </geometry>
         
         </collision>
@@ -491,7 +484,8 @@
     	<parent link="middlecastlewheelLB_link"/>
     	<child link="castlewheel_wheelLBlink"/>
         <origin xyz="0 0.03239 -0.075" rpy="0 0 0"/>
-        <limit effort="100" velocity="100"/>
+        <limit effort="1000" velocity="1"/>
+        <calibration rising="0.0"/>
         <axis xyz="1 0 0"/>
 	</joint>
 <!--  -->
@@ -745,7 +739,6 @@
         <origin xyz="0 0 0" rpy="0 0 0"/>  
 	</joint>
 <!--  -->
-
 <!-- lidar  -->
     <link name="lidar_link">
 
@@ -757,7 +750,7 @@
         
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="0.303 -0.006 0.1"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
             <geometry>
                 <mesh filename="package://drsina_description/models/meshes/lidarhukuyo.dae" />
             </geometry>
@@ -890,30 +883,30 @@
 	  <gazebo reference="roll_jointcastlewheelRF">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
-	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
+	    <kp>1.0</kp>
+	    <kd>1.0</kd>
 	  </gazebo>
 	  
 	  <gazebo reference="roll_jointcastlewheelLF">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
-	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
+	    <kp>1.0</kp>
+	    <kd>1.0</kd>
 	  </gazebo>
       <gazebo reference="roll_jointcastlewheelRB">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
-	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
+	    <kp>1.0</kp>
+	    <kd>1.0</kd>
 	  </gazebo>
 	  
 	  <gazebo reference="roll_jointcastlewheelLB">
 	    <mu1>1.0</mu1>
 	    <mu2>1.0</mu2>
-	    <kp>1000000.0</kp>
-	    <kd>100.0</kd>
+	    <kp>1.0</kp>
+	    <kd>1.0</kd>
 	  </gazebo>
-  
+
       <gazebo reference="emergencyButton_link">
 	    <material>Gazebo/Red</material>
 	  </gazebo>
@@ -938,9 +931,6 @@
       <gazebo reference="greenButton_link">
 	    <material>Gazebo/Green</material>
 	  </gazebo>
-
-
-
 
 <gazebo reference="lidar_link">
     <sensor type="ray" name="head_hokuyo_sensor">
@@ -1070,28 +1060,24 @@
       </plugin>
     </sensor>
 </gazebo>
-<!--transmissions-->
-    <transmission name="left_wheel_transmission">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="roll_jointL">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
-        </joint>
-        <actuator name="left_wheel_actuator">
-            <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        </actuator>
-    </transmission>
-    
-    <transmission name="right_wheel_transmission">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="roll_jointR">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>  
-        </joint>
-        <actuator name="right_wheel_actuator">
-            <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        </actuator>
-    </transmission>
+
+
+<gazebo>
+  <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    <alwaysOn>true</alwaysOn>
+    <legacyMode>false</legacyMode>
+    <updateRate>10</updateRate>
+    <leftJoint>roll_jointL</leftJoint>
+    <rightJoint>roll_jointR</rightJoint>
+    <wheelSeparation>0.43</wheelSeparation>
+    <wheelDiameter>0.15</wheelDiameter>
+    <torque>20</torque>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>odom</odometryFrame>
+    <robotBaseFrame>base_footprint</robotBaseFrame>
+  </plugin>
+</gazebo>
 
 
 </robot>
