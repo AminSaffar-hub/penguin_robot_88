@@ -1,4 +1,4 @@
-footprint: [[-35,35],[35,35],[35,-35],[-35,-35]]
+footprint: [[-0.35,0.35],[0.35,0.35],[0.35,-0.35],[-0.35,-0.35]]
 
 
 robot_base_frame: base_footprint
@@ -19,6 +19,6 @@ static:
 obstacles_laser:
     observation_sources: laser laser_back
     laser: {data_type: LaserScan, clearing: true, marking: true, topic: /drsina/laser/scan, inf_is_valid: true}
-    laser_back: {data_type: LaserScan, clearing: true, marking: true, topic: /drsina/ultrasonic/back1/scan, inf_is_valid: true}
+    laser_back: {data_type: LaserScan, clearing: true, marking: true, topic: /drsina/ultrasonic/back1/scan, inf_is_valid: false}
 inflation:
     inflation_radius: 1.0
