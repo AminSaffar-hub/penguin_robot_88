@@ -26,7 +26,6 @@
     </material>
     
   <link name="fix">
-     <pose>0 0 0 0 0 0</pose>
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <mass value="40" />
@@ -42,7 +41,7 @@
         <collision>
             <origin xyz="0 0 0.3" rpy="1.57 0 0" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/fix.stl" />
+                <mesh filename="package://hospital_robot/meshes/fix.dae" />
             </geometry>
         </collision>
 
@@ -50,14 +49,12 @@
             <origin xyz="0 0 0.3" rpy="1.57 0 0" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/fix.stl" />
+                filename="package://hospital_robot/meshes/fix.dae" />
             </geometry>
-            <material name="silver"/>
         </visual>
     </link>
 
     <link name="lampe">
-     <pose>0 0 0 0 0 0</pose>
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <mass value="0.2" />
@@ -73,7 +70,7 @@
         <collision>
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/lampe.stl" />
+                <mesh filename="package://hospital_robot/meshes/lampe.dae" />
             </geometry>
         </collision>
 
@@ -81,9 +78,8 @@
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/lampe.stl" />
+                filename="package://hospital_robot/meshes/lampe.dae" />
             </geometry>
-            <material name="red"/>
         </visual>
     </link>
 
@@ -96,12 +92,10 @@
 
 
   <link name="sep1">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 3.14" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/sep_complexe.stl" />
+                <mesh filename="package://hospital_robot/meshes/sepcomplex.dae" />
             </geometry>
         </collision>
 
@@ -109,9 +103,8 @@
             <origin xyz="0 0 0" rpy="0 0 3.14" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/sep_complexe.stl" />
+                filename="package://hospital_robot/meshes/sepcomplex.dae" />
             </geometry>
-            <material name="cyan"/>
         </visual>
     </link>
 
@@ -123,12 +116,10 @@
   </joint>
 
   <link name="sep2">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/sep_simple.stl" />
+                <mesh filename="package://hospital_robot/meshes/sep_simple.dae" />
             </geometry>
         </collision>
 
@@ -136,9 +127,8 @@
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/sep_simple.stl" />
+                filename="package://hospital_robot/meshes/sep_simple.dae" />
             </geometry>
-            <material name="cyan"/>
         </visual>
     </link>
 
@@ -150,12 +140,10 @@
   </joint>
 
   <link name="sep1.2">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/sep_complexe.stl" />
+                <mesh filename="package://hospital_robot/meshes/sepcomplex.dae" />
             </geometry>
         </collision>
 
@@ -163,9 +151,8 @@
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/sep_complexe.stl" />
+                filename="package://hospital_robot/meshes/sepcomplex.dae" />
             </geometry>
-            <material name="cyan"/>
         </visual>
     </link>
 
@@ -177,12 +164,10 @@
   </joint>
 
   <link name="sep2.2">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/sep_simple.stl" />
+                <mesh filename="package://hospital_robot/meshes/sep_simple.dae" />
             </geometry>
         </collision>
 
@@ -190,9 +175,8 @@
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/sep_simple.stl" />
+                filename="package://hospital_robot/meshes/sep_simple.dae" />
             </geometry>
-            <material name="cyan"/>
         </visual>
     </link>
 
@@ -204,8 +188,6 @@
   </joint>
 
   <link name="montechargeL">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -228,12 +210,10 @@
     <parent link="sep1" />
     <child link="montechargeL" />
     <axis xyz="0 0 1" />
-    <limit effort="1000.0" lower="0.35" upper="1.0" velocity="0.5"/>
+    <limit effort="1000.0" lower="0.2" upper="0.89" velocity="0.5"/>
   </joint>
 
   <link name="montechargeR">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="3.14 0 0" />
             <geometry>
@@ -256,17 +236,15 @@
     <parent link="sep1.2" />
     <child link="montechargeR" />
     <axis xyz="0 0 1" />
-    <limit effort="1000.0" lower="0.35" upper="1.0" velocity="0.5"/>
+    <limit effort="1000.0" lower="0.2" upper="0.89" velocity="0.5"/>
   </joint>
 
 
   <link name="kjarL">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/kjar.stl" />
+                <mesh filename="package://hospital_robot/meshes/kjar.dae" />
             </geometry>
         </collision>
 
@@ -274,27 +252,25 @@
             <origin xyz="0 0 0" rpy="0 0 1.57" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/kjar.stl" />
+                filename="package://hospital_robot/meshes/kjar.dae" />
             </geometry>
             <material name="black"/>
         </visual>
     </link>
 
     <joint name="kjar_joint" type="prismatic">
-    <origin xyz=" 0.51 -0.15 1.23" rpy="0 0 0" />
+    <origin xyz=" 0.51 -0.15 1.237" rpy="0 0 0" />
     <parent link="fix" />
     <child link="kjarL" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" lower="0.1" upper="0.3" velocity="0.5"/>
+    <limit effort="100.0" lower="0.001" upper="0.4" velocity="0.5"/>
   </joint>
 
   <link name="kjarR">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/kjar.stl" />
+                <mesh filename="package://hospital_robot/meshes/kjar.dae" />
             </geometry>
         </collision>
 
@@ -302,23 +278,21 @@
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/kjar.stl" />
+                filename="package://hospital_robot/meshes/kjar.dae" />
             </geometry>
             <material name="black"/>
         </visual>
     </link>
 
     <joint name="kjarR_joint" type="prismatic">
-    <origin xyz=" 0.40 -0.24 1.23" rpy="0 0 0" />
+    <origin xyz=" 0.3965 -0.25 1.239" rpy="0 0 0" />
     <parent link="fix" />
     <child link="kjarR" />
     <axis xyz="0 1 0" />
-    <limit effort="100.0" lower="0.1" upper="0.3" velocity="0.5"/>
+    <limit effort="100.0" lower="0.001" upper="0.4" velocity="0.5"/>
   </joint>
 
   <link name="plat">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="3.14 0 1.57" />
             <geometry>
@@ -337,19 +311,17 @@
     </link>
 
     <joint name="plat_joint" type="fixed">
-    <origin xyz="0.06 0.14 0.06 " rpy="0 0 0" />
-    <parent link="montechargeR" />
+    <origin xyz="0.06 0.05 0.06 " rpy="0 0 0" />
+    <parent link="montechargeL" />
     <child link="plat" />
     <axis xyz="0 0 0" />
   </joint>
 
   <link name="bottle">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/bottle.stl" />
+                <mesh filename="package://hospital_robot/meshes/bottle.dae" />
             </geometry>
         </collision>
 
@@ -357,22 +329,19 @@
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/bottle.stl" />
+                filename="package://hospital_robot/meshes/bottle.dae" />
             </geometry>
-            <material name="blue"/>
         </visual>
     </link>
 
     <joint name="bottle_joint" type="fixed">
-    <origin xyz="0.23 0.15 0 " rpy="0 0 0" />
-    <parent link="montechargeR" />
+    <origin xyz="0.23 0.05 0 " rpy="0 0 0" />
+    <parent link="montechargeL" />
     <child link="bottle" />
     <axis xyz="0 0 0" />
   </joint>
 
   <link name="porteL">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 -1.57 1.57" />
             <geometry>
@@ -398,8 +367,6 @@
   </joint>
 
   <link name="porteR">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 -1.57 1.57" />
             <geometry>
@@ -425,8 +392,6 @@
   </joint>
 
   <link name="yedL">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <geometry>
@@ -452,8 +417,6 @@
   </joint>
 
   <link name="yedR">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="0 0 3.14" />
             <geometry>
@@ -479,7 +442,7 @@
   </joint>
 
   <link name="yedF">
-     <pose>0 0 0 0 0 0</pose>
+
 
         <collision>
             <origin xyz="0 0 0" rpy="0 0 -1.57" />
@@ -505,67 +468,13 @@
     <axis xyz="0 0 0" />
   </joint>
 
-  <link name="gjouraL">
-     <pose>0 0 0 0 0 0</pose>
-
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 1.57" />
-            <geometry>
-                <mesh filename="package://hospital_robot/meshes/9joura.stl" />
-            </geometry>
-        </collision>
-
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 1.57" />
-            <geometry>
-                <mesh
-                filename="package://hospital_robot/meshes/9joura.stl" />
-            </geometry>
-            <material name="black"/>
-        </visual>
-    </link>
-
-    <joint name="kjouraL_joint" type="fixed">
-    <origin xyz="0.50 0.04 0.44  " rpy="0 0 0" />
-    <parent link="fix" />
-    <child link="gjouraL" />
-    <axis xyz="0 0 0" />
-  </joint>
-
-  <link name="gjouraR">
-     <pose>0 0 0 0 0 0</pose>
-
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
-            <geometry>
-                <mesh filename="package://hospital_robot/meshes/9joura.stl" />
-            </geometry>
-        </collision>
-
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 -1.57" />
-            <geometry>
-                <mesh
-                filename="package://hospital_robot/meshes/9joura.stl" />
-            </geometry>
-            <material name="black"/>
-        </visual>
-    </link>
-
-    <joint name="kjouraR_joint" type="fixed">
-    <origin xyz="0.40 -0.04 0.44  " rpy="0 0 0" />
-    <parent link="fix" />
-    <child link="gjouraR" />
-    <axis xyz="0 0 0" />
-  </joint>
+  
 
   <link name="liaison">
-     <pose>0 0 0 0 0 0</pose>
-
         <collision>
             <origin xyz="0 0 0" rpy="1.57 0 0" />
             <geometry>
-                <mesh filename="package://hospital_robot/meshes/liaison.stl" />
+                <mesh filename="package://hospital_robot/meshes/liaison.dae" />
             </geometry>
         </collision>
 
@@ -573,9 +482,8 @@
             <origin xyz="0 0 0" rpy="1.57 0 0" />
             <geometry>
                 <mesh
-                filename="package://hospital_robot/meshes/liaison.stl" />
+                filename="package://hospital_robot/meshes/liaison.dae" />
             </geometry>
-            <material name="cyan"/>
         </visual>
     </link>
 
