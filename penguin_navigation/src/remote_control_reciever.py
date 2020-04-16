@@ -9,7 +9,7 @@ def remote_control_reciever():
 
     rospy.init_node('remote_control_reciever', anonymous=True)
 
-    rospy.Subscriber("/Message", String, chatter_callback)
+    rospy.Subscriber("/command", String, chatter_callback)
 
     rospy.spin()
 

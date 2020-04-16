@@ -56,12 +56,14 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    XyTheta.msg
+   tables.msg
  )
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
   goal_srv.srv
+  tables_path.srv
 )
 
 ## Generate actions in the 'action' folder
