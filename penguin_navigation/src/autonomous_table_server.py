@@ -11,29 +11,26 @@ import tf
 a = String()
 s = String()
 j=1
+i=0
 t1=""
 t2=""
 t3=""
 t4=""
 t5=""
-boo="a"
-i=0
-
 
 def tables_string(req):
-    global t1,t2,t3,t4,t5,i,boo
-    boo=req.b
-    print(b)
-    if((j==1) and (b=="g")):
-        rospy.loginfo("  tab1= %s , tab2= %s ,tab3= %s , tab4= %s, tab5 = %s " 
-        % (req.table1, req.table2,req.table3,req.table4,req.table5))
+    global t1,t2,t3,t4,t5,i
+    if (j==1):
         t1=req.table1
         t2=req.table2
         t3=req.table3
         t4=req.table4
         t5=req.table5
+        rospy.loginfo("  tab1= %s , tab2= %s ,tab3= %s , tab4= %s, tab5 = %s " 
+        % (req.table1, req.table2,req.table3,req.table4,req.table5))
         s.data= req.table1 + req.table2+req.table3+req.table4+req.table5
         print(s.data)
+        path()
         j=0
 
 def sendresult() :
@@ -80,10 +77,10 @@ def path():
     global t1,t2,t3,t4,t5,i,j
     if(t1=='1'):
         i=1
-        move_to_goal(10.0 , 10.0 , 1.57)
+        move_to_goal(3.0 , 3.0 , 1.57)
     if(t1=='2'):
         i=2
-        move_to_goal(1.0 , 1.0 , 1.57)
+        move_to_goal(1.0 , 1.0 , 0)
     if(t1=='3'):
         i=3
         move_to_goal(1.0 , 1.0 , 1.57)
@@ -103,9 +100,8 @@ def node():
     PubResult = rospy.Publisher('/robot',String,queue_size=10)
     a.data = "zzzzz"
     PubResult.publish(a)
-    move_to_goal(3.0 , 3.0 , 1.57)
+    #move_to_goal(3.0 , 3.0 , 1.57)
     rospy.Subscriber("/tables_to_serve", tables, tables_string)
-    path()
     rospy.spin()
     
 
