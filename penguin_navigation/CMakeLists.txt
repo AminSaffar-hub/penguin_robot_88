@@ -64,6 +64,7 @@ add_service_files(
   FILES
   goal_srv.srv
   tables_path.srv
+  pathplanner.srv
 )
 
 ## Generate actions in the 'action' folder
