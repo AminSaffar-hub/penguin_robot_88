@@ -1,0 +1,11 @@
+penguin:
+  /gazebo_ros_control:
+    pid_gains:
+      LW_base_joint: 
+        p: 5.0 
+        i: 0.1 
+        d: 0.0
+      RW_base_joint: 
+        p: 5.0 
+        i: 0.1 
+        d: 0.0

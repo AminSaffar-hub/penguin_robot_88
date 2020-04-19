@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="scan_topic" default="scan" />
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <rosparam file="$(find penguin_navigation)/config/gmapping_param.yaml" command ="load"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+</launch>
