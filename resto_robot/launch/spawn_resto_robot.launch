@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- spawn urdf-->
+    <include file="$(find resto_robot)/launch/spawn_urdf.launch">
+        <arg name="x" value="0.0"/>
+        <arg name="y" value="0.0"/>
+        <arg name="z" value="0.2"/>
+        <arg name="urdf_robot_file" value="$(find resto_robot)/urdf/resto_robot.urdf"/>
+        <arg name="robot_name" value="resto_robot"/>
+    </include>
+    
+</launch>
