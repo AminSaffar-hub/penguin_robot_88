@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <arg name="world_file"  default="$(find turtlebot_navigation_gazebo)/worlds/empty_cafe.world"/>   
+    <arg name="world_file"  default="$(find drsina_description)/worlds/worldcafe.world"/>   
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
@@ -15,7 +15,7 @@
         <arg name="headless" value="$(arg headless)"/>
         <arg name="debug" value="$(arg debug)"/>
     </include>
-
+    <include file="$(find drsina_description)/launch/urdf_visualize.launch"/>
     <include file="$(find drsina_description)/launch/spawn_urdf.launch">
         <arg name="x" value="0.0"/>
         <arg name="y" value="0.0"/>
@@ -23,5 +23,5 @@
         <arg name="urdf_robot_file" value="$(find drsina_description)/urdf/drsina.urdf"/>
         <arg name="robot_name" value="drsina"/>
     </include>
-    
+
 </launch>
