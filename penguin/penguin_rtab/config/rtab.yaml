@@ -1,0 +1,20 @@
+frame_id: "base_link"
+
+queue_size: 10
+
+subscribe_depth: true
+subscribe_scan: true
+
+
+RGBD/ProximityBySpace: "false"
+
+RGBD/AngularUpdate: "0.01"
+RGBD/linearUpdate: "0.01"
+RGBD/OptimizeFromGraphEnd: "false"
+Optimizer/Slam2D: "true"
+
+Reg/Force3DoF: "true"
+Vis/MinInliers: "12"
+Grid/FromDepth: "false"
+
+
