@@ -22,7 +22,7 @@
     
 
 
-    <node name="rviz" pkg="rviz" type="rviz" args=""/>
+    <!--node name="rviz" pkg="rviz" type="rviz" args=""/-->
 
     
 </launch>

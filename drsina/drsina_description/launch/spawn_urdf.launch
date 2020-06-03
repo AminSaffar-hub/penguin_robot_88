@@ -10,9 +10,14 @@
         <param name="robot_description" command="cat $(arg urdf_robot_file)"/>
 
         <!-- launch rqt for user gui control  -->
-        <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+        <!--<node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
             <param name="default_topic" value="/cmd_vel"/> 
-        </node>
+        </node>-->
+        
+        <!-- launch keyboard for user gui control  -->
+        <!--<node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop">
+            <remap from="cmd_vel" to="/cmd_vel"/>
+        </node>-->
 
         <!-- launch gazebo  -->
         <!-- <node name="gazebo" pkg="gazebo_ros" type="gazebo"/> -->
