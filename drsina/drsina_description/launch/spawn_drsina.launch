@@ -17,8 +17,8 @@
     </include>
     
     <include file="$(find drsina_description)/launch/spawn_urdf.launch">
-        <arg name="x" value="0.0"/>
-        <arg name="y" value="0.0"/>
+        <arg name="x" value="-4.0"/>
+        <arg name="y" value="-4.0"/>
         <arg name="z" value="0.2"/>
         <arg name="urdf_robot_file" value="$(find drsina_description)/urdf/drsina.urdf"/>
         <arg name="robot_name" value="drsina"/>
@@ -26,18 +26,20 @@
 
     <include file="$(find drsina_description)/launch/drsina_control.launch"/>
 
-    <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find drsina_description)/rviz_config/drsina_simple.rviz)"/>-->
-    <!--<node name="image_converter" pkg="ros_darknet" type="darknet_ros.py"/>-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find drsina_description)/rviz_config/drsina_simple.rviz)"/>
+    <!--<node name="image_converter" pkg="ros_darknet" type="darknet_ros.py"/>
 
-    <!--<include file="$(find freenect_launch)/launch/freenect.launch"/>-->
-    <!--<node name="dodo_detector_ros" pkg="ros_darknet" type="detector.py" output="screen">
+    <include file="$(find freenect_launch)/launch/freenect.launch"/>-->
+    <node name="dodo_detector_ros" pkg="ros_darknet" type="detector.py" output="screen">
         <param name="image_topic" value="/camera/rgb/image_raw" />
         <param name="output_image_topic" value="/detector_ros/labeled" />
         <param name="point_cloud_topic" value="/camera/depth/points" />
         <param name="global_frame" value="odom" /> 
         <param name="camera_link" value="/kinect_link" /> 
         <param name="confidence_thresh" value="0.9" /> 
-    </node>-->
+    </node>
     
+    <!--<include file="$(find drsina_navigation)/launch/move_base_demo.launch"/>
+    <node name="move" pkg="drsina_navigation" type="autonomous_navigation_with_detection.py"/>-->
     
 </launch>
