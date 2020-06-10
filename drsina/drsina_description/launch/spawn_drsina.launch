@@ -3,7 +3,7 @@
     <arg name="world_file"  default="$(find drsina_description)/worlds/hospital_room.world"/>   
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
-    <arg name="gui" default="true"/>
+    <arg name="gui" default="false"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
 
@@ -39,7 +39,7 @@
         <param name="confidence_thresh" value="0.9" /> 
     </node>
     
-    <!--<include file="$(find drsina_navigation)/launch/move_base_demo.launch"/>
-    <node name="move" pkg="drsina_navigation" type="autonomous_navigation_with_detection.py"/>-->
+    <include file="$(find drsina_navigation)/launch/move_base_demo.launch"/>
+    <node name="move" pkg="drsina_navigation" type="autonomous_navigation_with_detection.py" output="screen"/>
     
 </launch>

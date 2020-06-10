@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+import os
+os.system("rosnode kill /move" )
+os.system("roslaunch drsina_navigation move_base2.launch")
 import rospy 
 import actionlib 
 from move_base_msgs.msg import MoveBaseAction,MoveBaseGoal
@@ -8,8 +11,9 @@ from std_msgs.msg import String
 from std_msgs.msg import Int8
 from penguin_navigation.msg import tables
 import tf
-import os
 
+
+rospy.sleep(6)
 i= 0
 point_list = []
 
@@ -49,44 +53,17 @@ def move_to_goal(xGoal , yGoal , orientation):
     
 def node():
     global i,point_list
-    rospy.init_node('AutonomousMove', anonymous=True)
+    rospy.init_node('AutonomousMove2', anonymous=True)
     state_pub = rospy.Publisher('/state', Int8, queue_size=10)
     i= 0
     state_pub.publish(i)
     rospy.Subscriber('/bed_point', Point, beds_path_callback,queue_size=10)
-    #rospy.sleep(6)
+    rospy.sleep(6)
     
-    #room1
-    move_to_goal(5.0 , -4.0 , 1.57)
-    i= 1
-    state_pub.publish(i)
-    rospy.sleep(2)
-    move_to_goal(5.0 , -4.0 , 0)
-    move_to_goal(5.0 , -4.0 , -3)
-
-    #shut down detection
-    i= 0
-    state_pub.publish(i)
-    rospy.sleep(3)
     
-    print(len(point_list))
-    for point in point_list :
-        move_to_goal(point.x ,point.y, 0.0 )
-    point_list = []
-
-    os.system("rosnode kill /move_base" )
-    os.system("rosrun drsina_navigation autonomous_navigation_with_detection2.py")
-    #rospy.sleep(10)
-
-    """ move_to_goal(7.67 , -4.15 , 1.57)
-    rospy.sleep(2)
-    move_to_goal(6.88 , -7.2 , 0)
-    rospy.sleep(2)
-    move_to_goal(4.85 , -7.51 , -3.1)
-    rospy.sleep(2) """
     
     #room2
-    """move_to_goal(-1.0 , -4.0 , 1.57)
+    move_to_goal(-1.0 , -4.0 , 1.57)
     move_to_goal(2.7 , 3.44 , 1.57)
 
     i= 1
@@ -101,33 +78,9 @@ def node():
     print(len(point_list))
     for point in point_list :
         move_to_goal(point.x ,point.y, 0.0 )
-    point_list = []"""
-    """move_to_goal(2.32 , 7.16 , 1.57)
-    rospy.sleep(2)
-    move_to_goal(6.98 , 8.54 , 0)
-    rospy.sleep(2)"""
-
-
-    """
-    #room3
-    move_to_goal(-4.33 , 3.27 ,1.57)
-
-    i= 1
-    state_pub.publish(i)
-
-    move_to_goal(-4.33 , 3.27 ,3.14)
-    move_to_goal(-4.33 , 3.27 ,0)
-
-    i= 0
-    state_pub.publish(i)
-
-    move_to_goal(-8.21 , 7.22 , 1.57)
-    rospy.sleep(2)
-    move_to_goal(-8.21 , 7.22 , -1.57)
-    move_to_goal(-1.47 , 8.75 , 3.14)
-    rospy.sleep(2)"""
-
-    #rospy.spin()
+    point_list = []
+    
+    rospy.spin()
 
     
 
